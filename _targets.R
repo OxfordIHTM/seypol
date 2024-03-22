@@ -12,7 +12,12 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 ### Data targets
 data_targets <- tar_plan(
-  
+  ## Get directory contents of SC Policies Google Drive ----
+  tar_target(
+    name = sc_policies_drive_contents,
+    command = sc_policies_ls(),
+    cue = tar_cue("always")
+  )
 )
 
 
