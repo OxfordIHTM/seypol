@@ -11,7 +11,7 @@
 #'
 
 get_pdf_docs_ids <- function(catalogue) {
-  sc_policy_drive_catalogue |>
+  catalogue |>
     dplyr::filter(stringr::str_detect(name, pattern = ".pdf")) |>
     dplyr::pull(id)
 }

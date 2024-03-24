@@ -9,7 +9,7 @@
 #'   the SC Policies **Google Drive**. Change this if SC Policies
 #'   **Google Drive** is moved.
 #'
-#' @return A dribble of names and ids of files and folders within the the
+#' @returns A dribble of names and ids of files and folders within the the
 #'   SC Policies **Google Drive**
 #'
 #' @author Ernest Guevarra
@@ -45,7 +45,9 @@ sc_policy_ls <- function(id = "1XlQM0Zte5dzc0-3cn7dA7kxaNjbN3OJQ") {
 #' download_googledrive(
 #'   id = "1SgV4uzle7WQAtmAbKDfU8xgY3BhXG8k3",
 #'   path = "data-raw/Policy Catalogue (26.02.24).pdf"
-#' )
+#' ) 
+#'
+#' @author Ernest Guevarra
 #' 
 #' @export
 #'
@@ -69,13 +71,19 @@ download_googledrive <- function(id,
 #'
 #' Catalogue SC Policies Google Drive contents
 #'
-#' @param directory_name
-#' @param sc_policy_drive_contents 
-#' @param tabular Logical. Should output be a table/data.frame? Default is TRUE.
-#'   If FALSE, output is in a list.
+#' @param directory_name Name of Google Drive directory to get contents from.
+#' @param sc_policy_drive_contents A data.frame/dribble of SC policy Google
+#'   Drive contents.
 #'   
-#' @returns A data.frame (if `tabular = TRUE`) or a list of Google Drive
-#'   contents with name of file and Google Drive identifier.
+#' @returns A data.frame Google Drive contents with name of file and Google 
+#'   Drive identifier.
+#'   
+#' @examples
+#' get_directory_contents("ACT", sc_policy_drive_contents)
+#'
+#' @author Ernest Guevarra
+#' 
+#' @export
 #'
 
 get_directory_contents <- function(directory_name,
@@ -177,6 +185,25 @@ get_directory_contents <- function(directory_name,
   drive_contents
 }
 
+
+#'
+#' Create SC Policy Google Drive catalogue
+#' 
+#' @param sc_policy_drive_contents A data.frame/dribble of SC policy Google
+#'   Drive contents.
+#' @param tabular Logical. Should output be a table or a list? Default to
+#'   TRUE.
+#'
+#' @returns A data.frame (if `tabular = TRUE`) or a list for the SC policy 
+#'   Google Drive catalogue
+#'   
+#' @examples
+#' create_drive_catalogue(sc_policy_drive_contents)
+#' 
+#' @auther Ernest Guevarra
+#' 
+#' @export
+#'
 
 create_drive_catalogue <- function(sc_policy_drive_contents,
                                    tabular = TRUE) {
