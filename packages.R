@@ -14,6 +14,10 @@ library(openxlsx)
 library(ggplot2)
 
 
+## Packages for unit testing/code testing and quality assurance ----
+library(assertthat)
+
+
 ## Packages for text processing and text modelling/NLP ----
 library(pdftools)
 library(tidytext)
