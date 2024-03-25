@@ -1,4 +1,4 @@
-name: test targets workflow
+name: test-targets-workflow
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Install system dependencies
         run: |
