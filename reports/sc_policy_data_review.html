@@ -464,13 +464,14 @@ below:</p>
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
+    xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate --&gt; xb4589fbef13db1c8([&quot;sc_policy_data_review_report&quot;]):::dispatched
+    xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate --&gt; x677847acaae4d32d([&quot;sc_policy_pdf_docs_ids&quot;]):::uptodate
     xffe29aeaee157f80([&quot;sc_policy_drive_contents&quot;]):::uptodate --&gt; x86e06af7b6a479ee([&quot;sc_policy_catalogue_info&quot;]):::outdated
-    x677847acaae4d32d([&quot;sc_policy_pdf_docs_ids&quot;]):::outdated --&gt; xf64fe3c990ad5884[&quot;sc_policy_pdf_docs_text&quot;]:::outdated
+    xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate --&gt; x4a9dec0b959c7d0a([&quot;sc_policy_word_docs_ids&quot;]):::uptodate
     xffe29aeaee157f80([&quot;sc_policy_drive_contents&quot;]):::uptodate --&gt; xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate
-    xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate --&gt; x677847acaae4d32d([&quot;sc_policy_pdf_docs_ids&quot;]):::outdated
-    x4a9dec0b959c7d0a([&quot;sc_policy_word_docs_ids&quot;]):::outdated --&gt; xd5982ac7eedf24f2[&quot;sc_policy_word_docs_text&quot;]:::outdated
-    xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate --&gt; x4a9dec0b959c7d0a([&quot;sc_policy_word_docs_ids&quot;]):::outdated
+    x677847acaae4d32d([&quot;sc_policy_pdf_docs_ids&quot;]):::uptodate --&gt; xf64fe3c990ad5884[&quot;sc_policy_pdf_docs_text&quot;]:::uptodate
     x86e06af7b6a479ee([&quot;sc_policy_catalogue_info&quot;]):::outdated --&gt; xcf90ec254633ca52([&quot;sc_policy_catalogue_file&quot;]):::outdated
+    x4a9dec0b959c7d0a([&quot;sc_policy_word_docs_ids&quot;]):::uptodate --&gt; xd5982ac7eedf24f2[&quot;sc_policy_word_docs_text&quot;]:::uptodate
     xcf90ec254633ca52([&quot;sc_policy_catalogue_file&quot;]):::outdated --&gt; x19ba61a7d210e288([&quot;sc_policy_catalogue_text&quot;]):::outdated
   end</code></pre>
 <p>On review of the data extraction outputs, the main issue noted was
