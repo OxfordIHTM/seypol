@@ -188,7 +188,7 @@ The steps in the current data ingest workflow are show in the diagram below:
 cat(
   "```mermaid",
   targets::tar_mermaid(
-    targets_only = TRUE, 
+    targets_only = TRUE, color = FALSE, legend = FALSE
     # names = c(
     #   raw_data, raw_data_clean, raw_data_clean_translated,
     #   sofala_district_population, sofala_ea_population, recoded_data

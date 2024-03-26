@@ -461,14 +461,7 @@ about 6-7 minutes.</p>
 <p>The steps in the current data ingest workflow are show in the diagram
 below:</p>
 <pre class="mermaid"><code>graph LR
-  style Legend fill:#FFFFFF00,stroke:#000000;
   style Graph fill:#FFFFFF00,stroke:#000000;
-  subgraph Legend
-    direction LR
-    x0a52b03877696646([&quot;&quot;Outdated&quot;&quot;]):::outdated --- x7420bd9270f8d27d([&quot;&quot;Up to date&quot;&quot;]):::uptodate
-    x7420bd9270f8d27d([&quot;&quot;Up to date&quot;&quot;]):::uptodate --- xbf4603d6c2c2ad6b([&quot;&quot;Stem&quot;&quot;]):::none
-    xbf4603d6c2c2ad6b([&quot;&quot;Stem&quot;&quot;]):::none --- x70a5fa6bea6f298d[&quot;&quot;Pattern&quot;&quot;]:::none
-  end
   subgraph Graph
     direction LR
     xffe29aeaee157f80([&quot;sc_policy_drive_contents&quot;]):::uptodate --&gt; x86e06af7b6a479ee([&quot;sc_policy_catalogue_info&quot;]):::outdated
@@ -479,13 +472,7 @@ below:</p>
     xb70e8be842aaaf39([&quot;sc_policy_drive_catalogue&quot;]):::uptodate --&gt; x4a9dec0b959c7d0a([&quot;sc_policy_word_docs_ids&quot;]):::outdated
     x86e06af7b6a479ee([&quot;sc_policy_catalogue_info&quot;]):::outdated --&gt; xcf90ec254633ca52([&quot;sc_policy_catalogue_file&quot;]):::outdated
     xcf90ec254633ca52([&quot;sc_policy_catalogue_file&quot;]):::outdated --&gt; x19ba61a7d210e288([&quot;sc_policy_catalogue_text&quot;]):::outdated
-  end
-  classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
-  classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
-  classDef none stroke:#000000,color:#000000,fill:#94a4ac;
-  linkStyle 0 stroke-width:0px;
-  linkStyle 1 stroke-width:0px;
-  linkStyle 2 stroke-width:0px;</code></pre>
+  end</code></pre>
 <p>On review of the data extraction outputs, the main issue noted was
 that there are a few <code>PDF</code> documents that produced empty
 data. When reviewed, all these files were scanned copies of the original
