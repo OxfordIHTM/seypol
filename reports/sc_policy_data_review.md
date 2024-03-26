@@ -63,13 +63,14 @@ graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> xb4589fbef13db1c8(["sc_policy_data_review_report"]):::dispatched
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate
     xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated
-    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::outdated
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate
     xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated
-    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::outdated
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated
+    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::uptodate
     x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated --> xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated
+    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::uptodate
     xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated --> x19ba61a7d210e288(["sc_policy_catalogue_text"]):::outdated
   end
 ```
