@@ -90,7 +90,11 @@ output_targets <- tar_plan(
 
 ### Reporting targets
 report_targets <- tar_plan(
-  
+  tar_render(
+    name = sc_policy_data_review_report,
+    path = "reports/sc_policy_data_review.Rmd",
+    output_dir = here::here()
+  )
 )
 
 

@@ -46,9 +46,14 @@ read_pdf_doc <- function(id) {
 
 get_word_docs_ids <- function(catalogue) {
   doc_files_names <- catalogue |>
-    dplyr::filter(stringr::str_detect(string = name, pattern = ".docx|.doc")) |>
+    dplyr::filter(stringr::str_detect(
+      string = name, 
+      pattern = ".docx.docx|.docx.doc|.doc.docx|.docx")
+    ) |>
     dplyr::pull(name) |>
-    stringr::str_remove_all(pattern = ".docx|.doc")
+    stringr::str_remove_all(
+      pattern = ".doc.docx|.docx.docx|.docx.doc|.docx"
+    )
   
   pdf_files_names <- catalogue |>
     dplyr::filter(stringr::str_detect(string = name, pattern = ".pdf|.PDF")) |>
@@ -63,6 +68,7 @@ get_word_docs_ids <- function(catalogue) {
         string = name, pattern = paste(doc_files_names_no_pdf, collapse = "|")
       )
     ) |>
+    dplyr::filter(!tools::file_ext(name) %in% c("doc", "pdf")) |>
     dplyr::pull(id)
 }
 
