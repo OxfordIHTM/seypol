@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Seychelles Health Policy Gap Analysis
+# Gap analysis of policy guidance in the health sector in Seychelles
 
 <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a>
 <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
@@ -21,10 +21,19 @@ code](https://img.shields.io/badge/license%20(for%20code)-GPL3.0-blue.svg)](http
 This is a [`docker`](https://www.docker.com/get-started)-containerised,
 [`{targets}`](https://docs.ropensci.org/targets/)-based,
 [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled
-[`R`](https://cran.r-project.org/) workflow for the project *Seychelles
-Health Policy Gap Analysis*.
+[`R`](https://cran.r-project.org/) workflow for the project *Gap
+analysis of policy guidance in the health sector in Seychelles*.
 
 ## About the Project
+
+The Seychelles National Health Strategic Plan (NHSP) 2022-2026 has
+identified the need for an analysis of existing policy gaps, to guide
+future development of priority policies (under strategic direction 1).
+Using existing situation analysis and identified priorities in the NHSP,
+and reviewing a catalogue of existing health policies, this project aims
+to identify gaps in health policy and guidance. These identified gaps
+will then inform a prioritisation process based on a set of agreed
+criteria.
 
 ## Repository Structure
 
@@ -33,7 +42,6 @@ The project repository is structured as follows:
     sc-policy-review
         |-- .github/
           |-- workflows/
-            |-- test-targets-workflow.yml
         |-- data/
         |-- data-raw/
         |-- outputs/
@@ -117,15 +125,29 @@ graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> xb4589fbef13db1c8(["sc_policy_data_review_report"]):::uptodate
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate
     xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated
-    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::outdated
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate
     xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated
-    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::outdated
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated
+    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::uptodate
     x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated --> xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated
+    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::uptodate
     xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated --> x19ba61a7d210e288(["sc_policy_catalogue_text"]):::outdated
   end
+```
+
+To run the data ingest workflow, issue the following command from within
+the project’s environment on your R console:
+
+``` r
+targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))
+```
+
+or from Terminal:
+
+``` r
+Rscript -e 'targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))'
 ```
 
 <!--- HASH THIS SECTION FOR NOW
