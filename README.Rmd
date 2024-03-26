@@ -34,7 +34,6 @@ The project repository is structured as follows:
 sc-policy-review
     |-- .github/
       |-- workflows/
-        |-- test-targets-workflow.yml
     |-- data/
     |-- data-raw/
     |-- outputs/
@@ -96,6 +95,19 @@ cat(
   sep = "\n"
 )
 ```
+
+To run the data ingest workflow, issue the following command from within the project's environment on your R console:
+
+```R
+targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))
+```
+
+or from Terminal:
+
+```R
+Rscript -e 'targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))'
+```
+
 
 <!--- HASH THIS SECTION FOR NOW
 ### System requirements
