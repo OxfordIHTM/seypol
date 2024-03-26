@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Seychelles Health Policy Gap Analysis
+# Gap analysis of policy guidance in the health sector in Seychelles
 
 <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a>
 <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
@@ -21,10 +21,19 @@ code](https://img.shields.io/badge/license%20(for%20code)-GPL3.0-blue.svg)](http
 This is a [`docker`](https://www.docker.com/get-started)-containerised,
 [`{targets}`](https://docs.ropensci.org/targets/)-based,
 [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled
-[`R`](https://cran.r-project.org/) workflow for the project *Seychelles
-Health Policy Gap Analysis*.
+[`R`](https://cran.r-project.org/) workflow for the project *Gap
+analysis of policy guidance in the health sector in Seychelles*.
 
 ## About the Project
+
+The Seychelles National Health Strategic Plan (NHSP) 2022-2026 has
+identified the need for an analysis of existing policy gaps, to guide
+future development of priority policies (under strategic direction 1).
+Using existing situation analysis and identified priorities in the NHSP,
+and reviewing a catalogue of existing health policies, this project aims
+to identify gaps in health policy and guidance. These identified gaps
+will then inform a prioritisation process based on a set of agreed
+criteria.
 
 ## Repository Structure
 
