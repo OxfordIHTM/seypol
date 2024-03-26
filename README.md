@@ -1,7 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Seychelles Health Policy Gap Analysis <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a> <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
+# Seychelles Health Policy Gap Analysis
+
+<a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a>
+<a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
 
 <!-- badges: start -->
 
@@ -103,6 +106,39 @@ versions used are recorded in `renv.lock` and code used to manage
 dependencies is in `renv/` and other files in the root project
 directory. On starting an R session in the working directory, run
 `renv::restore()` to install R package dependencies.
+
+### Data ingest workflow
+
+The data ingest workflow is described in the image below:
+
+``` mermaid
+graph LR
+  style Legend fill:#FFFFFF00,stroke:#000000;
+  style Graph fill:#FFFFFF00,stroke:#000000;
+  subgraph Legend
+    direction LR
+    x0a52b03877696646([""Outdated""]):::outdated --- x7420bd9270f8d27d([""Up to date""]):::uptodate
+    x7420bd9270f8d27d([""Up to date""]):::uptodate --- xbf4603d6c2c2ad6b([""Stem""]):::none
+    xbf4603d6c2c2ad6b([""Stem""]):::none --- x70a5fa6bea6f298d[""Pattern""]:::none
+  end
+  subgraph Graph
+    direction LR
+    xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated
+    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::outdated
+    xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated
+    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::outdated
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated
+    x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated --> xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated
+    xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated --> x19ba61a7d210e288(["sc_policy_catalogue_text"]):::outdated
+  end
+  classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
+  classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
+  classDef none stroke:#000000,color:#000000,fill:#94a4ac;
+  linkStyle 0 stroke-width:0px;
+  linkStyle 1 stroke-width:0px;
+  linkStyle 2 stroke-width:0px;
+```
 
 <!--- HASH THIS SECTION FOR NOW
 ### System requirements

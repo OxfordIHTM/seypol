@@ -21,6 +21,7 @@ library(assertthat)
 ## Packages for text processing and text modelling/NLP ----
 library(pdftools)
 library(tidytext)
+library(officer)
 
 
 ## Packages for cloud-based drives for access and storage ----

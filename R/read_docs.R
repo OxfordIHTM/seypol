@@ -43,3 +43,40 @@ read_pdf_doc <- function(id) {
 }
 
 
+
+get_word_docs_ids <- function(catalogue) {
+  doc_files_names <- catalogue |>
+    dplyr::filter(stringr::str_detect(string = name, pattern = ".docx|.doc")) |>
+    dplyr::pull(name) |>
+    stringr::str_remove_all(pattern = ".docx|.doc")
+  
+  pdf_files_names <- catalogue |>
+    dplyr::filter(stringr::str_detect(string = name, pattern = ".pdf|.PDF")) |>
+    dplyr::pull(name) |>
+    stringr::str_remove_all(pattern = ".pdf|.PDF")
+  
+  doc_files_names_no_pdf <- doc_files_names[!doc_files_names %in% pdf_files_names]
+  
+  catalogue |>
+    dplyr::filter(
+      stringr::str_detect(
+        string = name, pattern = paste(doc_files_names_no_pdf, collapse = "|")
+      )
+    ) |>
+    dplyr::pull(id)
+}
+
+
+read_word_doc <- function(id) {
+  file_dir <- tempdir()
+  
+  download_googledrive(
+    id = id,
+    path = file.path(file_dir, paste0(id, ".docx")),
+    overwrite = TRUE
+  )
+  
+  officer::read_docx(file.path(file_dir, paste0(id, ".docx"))) |>
+    officer::docx_summary() |>
+    dplyr::pull(text)
+}
