@@ -11,12 +11,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Seychelles Health Policy Gap Analysis <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a> <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
+# Seychelles Health Policy Gap Analysis 
+
+<a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a> <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
 
 <!-- badges: start -->
-[![License for code](https://img.shields.io/badge/license (for code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![License for code](https://img.shields.io/badge/license (for code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
+[![test-targets-workflow](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml)
 <!-- badges: end -->
 
 This is a [`docker`](https://www.docker.com/get-started)-containerised, [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for the project *Seychelles Health Policy Gap Analysis*.
@@ -73,6 +76,26 @@ sc-policy-review
 ### R package dependencies
 
 This project was built using `R 4.3.3`. This project uses the `renv` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in `renv/` and other files in the root project directory. On starting an R session in the working directory, run `renv::restore()` to install R package dependencies.
+
+
+### Data ingest workflow
+
+The data ingest workflow is described in the image below:
+
+```{r data_ingest_workflow, echo = FALSE, message = FALSE, results = 'asis'}
+cat(
+  "```mermaid",
+  targets::tar_mermaid(
+    targets_only = TRUE, color = FALSE, legend = FALSE
+    # names = c(
+    #   raw_data, raw_data_clean, raw_data_clean_translated,
+    #   sofala_district_population, sofala_ea_population, recoded_data
+    # )
+  ),
+  "```",
+  sep = "\n"
+)
+```
 
 <!--- HASH THIS SECTION FOR NOW
 ### System requirements

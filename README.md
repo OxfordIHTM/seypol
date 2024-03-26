@@ -1,17 +1,21 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Seychelles Health Policy Gap Analysis <a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a> <a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
+# Seychelles Health Policy Gap Analysis
+
+<a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a>
+<a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
 
 <!-- badges: start -->
 
-[![License for
-code](https://img.shields.io/badge/license%20(for%20code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![License for
+code](https://img.shields.io/badge/license%20(for%20code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
+[![test-targets-workflow](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml)
 <!-- badges: end -->
 
 This is a [`docker`](https://www.docker.com/get-started)-containerised,
@@ -103,6 +107,26 @@ versions used are recorded in `renv.lock` and code used to manage
 dependencies is in `renv/` and other files in the root project
 directory. On starting an R session in the working directory, run
 `renv::restore()` to install R package dependencies.
+
+### Data ingest workflow
+
+The data ingest workflow is described in the image below:
+
+``` mermaid
+graph LR
+  style Graph fill:#FFFFFF00,stroke:#000000;
+  subgraph Graph
+    direction LR
+    xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated
+    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::outdated
+    xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::outdated
+    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::outdated
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::outdated
+    x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated --> xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated
+    xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated --> x19ba61a7d210e288(["sc_policy_catalogue_text"]):::outdated
+  end
+```
 
 <!--- HASH THIS SECTION FOR NOW
 ### System requirements

@@ -36,3 +36,8 @@ process_sc_policy_catalogue <- function(sc_policy_catalogue_text) {
   sc_policy_catalogue_text[[2]] |>
     (\(x) x[4:38])()
 }
+
+
+detect_duplicate_docs <- function() {
+  
+}

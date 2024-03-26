@@ -16,7 +16,7 @@ data_targets <- tar_plan(
   tar_target(
     name = sc_policy_drive_contents,
     command = sc_policy_ls(),
-    cue = tar_cue("always")
+    cue = tar_cue("thorough")
   ),
   ## Get file info for SC policies catalogue ----
   tar_target(
@@ -43,14 +43,28 @@ data_targets <- tar_plan(
     name = sc_policy_drive_catalogue,
     command = create_drive_catalogue(sc_policy_drive_contents)
   ),
+  ## Get Google Drive identifiers for pdf documents ----
   tar_target(
     name = sc_policy_pdf_docs_ids,
     command = get_pdf_docs_ids(sc_policy_drive_catalogue)
   ),
+  ## Extract text from pdfs ----
   tar_target(
-    name = sc_policy_docs_text,
+    name = sc_policy_pdf_docs_text,
     command = read_pdf_doc(sc_policy_pdf_docs_ids),
     pattern = map(sc_policy_pdf_docs_ids),
+    iteration = "list"
+  ),
+  ## Get Google Drive identifiers for DOC/DOCX documents ----
+  tar_target(
+    name = sc_policy_word_docs_ids,
+    command = get_word_docs_ids(sc_policy_drive_catalogue)
+  ),
+  ## Extract text from word docs ----
+  tar_target(
+    name = sc_policy_word_docs_text,
+    command = read_word_doc(sc_policy_word_docs_ids),
+    pattern = map(sc_policy_word_docs_ids),
     iteration = "list"
   )
 )
@@ -76,7 +90,11 @@ output_targets <- tar_plan(
 
 ### Reporting targets
 report_targets <- tar_plan(
-  
+  tar_render(
+    name = sc_policy_data_review_report,
+    path = "reports/sc_policy_data_review.Rmd",
+    output_dir = here::here()
+  )
 )
 
 
