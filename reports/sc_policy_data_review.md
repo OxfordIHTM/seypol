@@ -1,7 +1,7 @@
 ---
 title: Seychelles Policy Data Review
 author: Ernest Guevarra
-date: "2024-03-26"
+date: "2024-03-27"
 output: 
   rmarkdown::html_document:
     toc: true
@@ -63,7 +63,7 @@ graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> xb4589fbef13db1c8(["sc_policy_data_review_report"]):::dispatched
+    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> xb4589fbef13db1c8(["sc_policy_data_review_report"]):::outdated
     xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate
     xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated
     xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate

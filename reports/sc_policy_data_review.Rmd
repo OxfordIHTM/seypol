@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
   message = FALSE, 
   warning = FALSE, 
   fig.height = 6, 
-  fig.width = 8,
-  dev = "ragg_png"
+  fig.width = 8#,
+  #dev = "ragg_png"
 )
 
 ## Load libraries and custom functions -----------------------------------------
