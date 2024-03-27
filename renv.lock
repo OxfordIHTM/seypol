@@ -831,7 +831,7 @@
       "RemoteUsername": "OxfordIHTM",
       "RemoteRepo": "oxthema",
       "RemoteRef": "main",
-      "RemoteSha": "b297367a534fed2ed736ef7b7411a76463727683",
+      "RemoteSha": "204bbe6f4a3ae5529e12fce0e52a8b04c0d23c5b",
       "Requirements": [
         "R",
         "forestploter",
@@ -840,7 +840,7 @@
         "systemfonts",
         "withr"
       ],
-      "Hash": "487780cd88f6f717a4d8ea77d4b39be5"
+      "Hash": "5517406f54d80401332c929dad659ac3"
     },
     "pdftools": {
       "Package": "pdftools",
