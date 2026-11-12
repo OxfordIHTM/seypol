@@ -86,3 +86,48 @@ read_word_doc <- function(id) {
     officer::docx_summary() |>
     dplyr::pull(text)
 }
+
+
+#'
+#' Convert policy documents to markdown
+#' 
+#' @param id A Google Drive identifier of an SC policy document
+#' @param label A character object to label the markdown text of the policy
+#'   document
+#' @param directory A character value for the directory to download the policy
+#'   documents to before conversion
+#' 
+#' @returns A markdown object of the policy document
+#' 
+#' @author Ernest Guevarra
+#' 
+#' @export
+#' 
+
+convert_to_markdown <- function(file_name, directory, id, label) {
+  ext <- file_name |>
+    stringr::str_extract_all(pattern = ".pdf|.PDF|.docx|.doc") |>
+    lapply(FUN = function(x) x[length(x)] |> tolower()) |>
+    unlist()
+
+  file_path <- file.path(directory, paste0(label, ext))
+  
+  download_googledrive(
+    id = id,
+    path = file_path,
+    overwrite = TRUE
+  )
+
+  ## docs that have empty markdowns ----
+  x <- c(
+    "act-08-2014_food-act",
+    "act-13-2015_public-health-act",
+    "act-09-2003_data-protection-act",
+    "apl-xx-xxxx_seychelles-national-plan-for-people-with-dementia",
+    "crc-02-2021_results-based-management-framework"
+  )
+
+
+  
+  ragnar::read_as_markdown(path = file_path, origin = label)
+}

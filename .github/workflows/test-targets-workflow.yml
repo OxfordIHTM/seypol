@@ -12,11 +12,11 @@ on:
 jobs:
   data-ingest-workflow:
     runs-on: ubuntu-latest
-    container: rocker/tidyverse:4.4.0
+    container: rocker/tidyverse:4.6.2
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Install system dependencies
         run: |
