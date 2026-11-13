@@ -86,3 +86,4 @@ read_word_doc <- function(id) {
     officer::docx_summary() |>
     dplyr::pull(text)
 }
+

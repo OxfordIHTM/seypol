@@ -32,3 +32,8 @@ library(googledrive)
 library(oxthema)
 library(xaringan)
 library(xaringanthemer)
+
+
+## Packages for LLM/RAG ----
+library(ellmer)
+library(ragnar)

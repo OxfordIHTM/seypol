@@ -24,7 +24,7 @@ sc_policy_ls <- function(id = "1XlQM0Zte5dzc0-3cn7dA7kxaNjbN3OJQ") {
   ## Google Drive deauthorisation
   googledrive::drive_deauth()
   
-  ## Get dribble of files and folders inside Open Marawi Google Drive
+  ## Get dribble of files and folders inside Google Drive
   googledrive::drive_get(id = id) |>
     googledrive::drive_ls()
 }
@@ -200,13 +200,12 @@ get_directory_contents <- function(directory_name,
 #' @examples
 #' create_drive_catalogue(sc_policy_drive_contents)
 #' 
-#' @auther Ernest Guevarra
+#' @author Ernest Guevarra
 #' 
 #' @export
 #'
 
-create_drive_catalogue <- function(sc_policy_drive_contents,
-                                   tabular = TRUE) {
+create_drive_catalogue <- function(sc_policy_drive_contents) {
   ## Deauth ----
   googledrive::drive_deauth()
   
@@ -226,12 +225,34 @@ create_drive_catalogue <- function(sc_policy_drive_contents,
     sc_policy_drive_contents = sc_policy_drive_contents
   )
   
-  ## Name outputs by their parent directory ---
+  ## Name outputs by their parent directory ----
   names(directory_contents) <- directory_names
+
+  ## Create vector of policy documents to remove or keep ----
+  index_docs_to_remove <- list(
+    -c(6, 15, 17, 33, 35, 45, 50, 52, 53), 
+    #-c(60, 66, 68, 72, 85:87, 89, 90, 100, 103),
+    -c(2, 5:6, 9, 11, 15, 28:30, 32:33, 43, 46, 55),
+    c(2:4, 6:22),
+    1:8,
+    -4,
+    1,
+    1:5
+  )
+
+  ## Remove DOC/DOCX duplicates and other non-policy docs ----
+  #directory_contents <- directory_contents[index_docs_to_remove]
+
+  directory_contents <- Map(
+    function(x, a) x[a, ],
+    x = directory_contents,
+    a = index_docs_to_remove
+  )
   
-  ## Flatten output ----
-  if (tabular)
-    dplyr::bind_rows(directory_contents, .id = "type")
-  else
-    directory_contents
+  ## Flatten output and process outputs ----
+  directory_contents <- dplyr::bind_rows(directory_contents, .id = "type") |>
+    create_policy_names()
+
+  ## Return directory contents ----
+  directory_contents
 }

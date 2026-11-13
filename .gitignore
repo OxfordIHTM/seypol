@@ -8,3 +8,10 @@ data-raw
 !data-raw/.gitkeep
 data
 !data/.gitkeep
+policies/downloads/*.pdf
+policies/downloads/*.docx
+policies/downloads/*.doc
+!policies/downloads/.gitkeep
+.env
+.env_user
+*.jpg
