@@ -14,3 +14,4 @@ policies/downloads/*.doc
 !policies/downloads/.gitkeep
 .env
 .env_user
+*.jpg

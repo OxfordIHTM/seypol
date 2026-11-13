@@ -13,8 +13,11 @@ jobs:
   data-ingest-workflow:
     runs-on: ubuntu-latest
     container: rocker/tidyverse:4.6.2
+    
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
       - uses: actions/checkout@v6
       
@@ -41,7 +44,7 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(sc_policy_pdf_docs_text)
+          targets::tar_make(sc_policy_drive_catalogue)
         shell: Rscript {0}
         
         
