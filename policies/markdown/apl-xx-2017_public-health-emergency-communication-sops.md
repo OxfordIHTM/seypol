@@ -665,6 +665,8 @@ activities,
 
 feedback
 
+rumours
+
 and
 
 on
@@ -673,8 +675,6 @@ on
 public/communities)
   Continue to use SMS
   Continue to use social media and website
-
-rumours
 
 3)  Activate  targeted  communication  to  thought  leaders  and  influencers.
 By 48 hours, the direct communication channel to community influencers

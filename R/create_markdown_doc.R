@@ -13,7 +13,7 @@
 #' 
 
 create_markdown_doc <- function(markdown_text, directory) {
-  file_path <- file.path(directory, paste0(markdown_text@origin, ".md"))
+  file_path <- file.path(directory, paste0(names(markdown_text), ".md"))
 
   strsplit(x = markdown_text, split = "\n")[[1L]] |>
     writeLines(con = file_path)
