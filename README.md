@@ -120,20 +120,34 @@ directory. On starting an R session in the working directory, run
 
 The data ingest workflow is described in the image below:
 
+- sc_policy_pdf_docs_text declared \[122 branches\]
+- sc_policy_word_docs_text declared \[19 branches\]
+- sc_policy_markdown declared \[136 branches\]
+- sc_policy_markdown_file declared \[136 branches\]
+
 ``` mermaid
 graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> xb4589fbef13db1c8(["sc_policy_data_review_report"]):::uptodate
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate
-    xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated
-    xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate --> x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate
-    xffe29aeaee157f80(["sc_policy_drive_contents"]):::uptodate --> xb70e8be842aaaf39(["sc_policy_drive_catalogue"]):::uptodate
-    x677847acaae4d32d(["sc_policy_pdf_docs_ids"]):::uptodate --> xf64fe3c990ad5884["sc_policy_pdf_docs_text"]:::uptodate
-    x86e06af7b6a479ee(["sc_policy_catalogue_info"]):::outdated --> xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated
-    x4a9dec0b959c7d0a(["sc_policy_word_docs_ids"]):::uptodate --> xd5982ac7eedf24f2["sc_policy_word_docs_text"]:::uptodate
-    xcf90ec254633ca52(["sc_policy_catalogue_file"]):::outdated --> x19ba61a7d210e288(["sc_policy_catalogue_text"]):::outdated
+    x8d6cb232693ec2bd(["sc_policy_catalogue_info"]):::outdated --> x463e9687a755ea1f(["sc_policy_catalogue_file"]):::outdated
+    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> x8d6cb232693ec2bd(["sc_policy_catalogue_info"]):::outdated
+    x463e9687a755ea1f(["sc_policy_catalogue_file"]):::outdated --> x762e8a6370ff7286(["sc_policy_catalogue_text"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x0213d3acdfc48626(["sc_policy_data_review_report"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated
+    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated
+    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    x1b466685f9e11517(["text_extraction_task_prompt"]):::uptodate --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    x044b00013eb39812["sc_policy_markdown"]:::outdated --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated
+    x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated --> xd96542c0567331d8["sc_policy_pdf_docs_text"]:::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated
+    xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated --> xa6ac053d07a1ae95["sc_policy_word_docs_text"]:::outdated
+    
   end
 ```
 
@@ -141,13 +155,13 @@ To run the data ingest workflow, issue the following command from within
 the project’s environment on your R console:
 
 ``` r
-targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))
+targets::tar_make(sc_policy_markdown_file)
 ```
 
 or from Terminal:
 
 ``` r
-Rscript -e 'targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))'
+Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
 ```
 
 <!--- HASH THIS SECTION FOR NOW
