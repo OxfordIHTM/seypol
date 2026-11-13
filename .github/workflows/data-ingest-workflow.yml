@@ -13,7 +13,7 @@ jobs:
   data-ingest-workflow:
     runs-on: ubuntu-latest
     container: rocker/tidyverse:4.6.2
-    timeout-minutes: 60
+    timeout-minutes: 90
     
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
