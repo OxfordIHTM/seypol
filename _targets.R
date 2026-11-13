@@ -8,6 +8,15 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 ## Create targets and list targets objects ----
 
+### LLM targets ----
+llm_targets <- tar_plan(
+  #### Prompt for text extraction from documents not converted by markitdown ----
+  tar_target(
+    name = text_extraction_task_prompt,
+    command = ellmer::interpolate_file("prompts/text_extraction_task_prompt.md")
+  )
+)
+
 ### Data targets
 data_targets <- tar_plan(
   #### Get directory contents of SC Policies Google Drive ----
@@ -61,7 +70,8 @@ data_targets <- tar_plan(
     name = sc_policy_markdown,
     command = convert_to_markdown(
       file_name = sc_policy_docs_file_names, directory = "policies/downloads",
-      id = sc_policy_docs_ids, label = sc_policy_docs_labels
+      id = sc_policy_docs_ids, label = sc_policy_docs_labels,
+      prompt = text_extraction_task_prompt
     ),
     pattern = map(
       sc_policy_docs_file_names, sc_policy_docs_ids, sc_policy_docs_labels
