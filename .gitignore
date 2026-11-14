@@ -15,3 +15,4 @@ policies/downloads/*.doc
 .env
 .env_user
 *.jpg
+README.html

@@ -88,10 +88,6 @@ cat(
   "```mermaid",
   targets::tar_mermaid(
     targets_only = TRUE, color = FALSE, legend = FALSE
-    # names = c(
-    #   raw_data, raw_data_clean, raw_data_clean_translated,
-    #   sofala_district_population, sofala_ea_population, recoded_data
-    # )
   ),
   "```",
   sep = "\n"
@@ -101,13 +97,13 @@ cat(
 To run the data ingest workflow, issue the following command from within the project's environment on your R console:
 
 ```R
-targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))
+targets::tar_make(sc_policy_markdown_file)
 ```
 
 or from Terminal:
 
 ```R
-Rscript -e 'targets::tar_make(c(sc_policy_pdf_docs_text, sc_policy_word_docs_text))'
+Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
 ```
 
 
