@@ -120,32 +120,32 @@ directory. On starting an R session in the working directory, run
 
 The data ingest workflow is described in the image below:
 
-- sc_policy_pdf_docs_text declared \[122 branches\]
-- sc_policy_word_docs_text declared \[19 branches\]
-- sc_policy_markdown declared \[136 branches\]
-- sc_policy_markdown_file declared \[136 branches\]
-
 ``` mermaid
 graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
+    xba597cd142706396(["local_gemma_model"]):::outdated --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
+    x1b466685f9e11517(["text_extraction_task_prompt"]):::uptodate --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
     x8d6cb232693ec2bd(["sc_policy_catalogue_info"]):::outdated --> x463e9687a755ea1f(["sc_policy_catalogue_file"]):::outdated
     x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> x8d6cb232693ec2bd(["sc_policy_catalogue_info"]):::outdated
     x463e9687a755ea1f(["sc_policy_catalogue_file"]):::outdated --> x762e8a6370ff7286(["sc_policy_catalogue_text"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x0213d3acdfc48626(["sc_policy_data_review_report"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated
-    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated
-    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x0213d3acdfc48626(["sc_policy_data_review_report"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated
+    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated --> x8572be3fb16caa03["sc_policy_downloads"]:::outdated
+    x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated --> x8572be3fb16caa03["sc_policy_downloads"]:::outdated
+    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated --> x8572be3fb16caa03["sc_policy_downloads"]:::outdated
+    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched
     x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
     x1b466685f9e11517(["text_extraction_task_prompt"]):::uptodate --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
     x044b00013eb39812["sc_policy_markdown"]:::outdated --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated
     x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated --> xd96542c0567331d8["sc_policy_pdf_docs_text"]:::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::outdated --> xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated
     xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated --> xa6ac053d07a1ae95["sc_policy_word_docs_text"]:::outdated
     
   end

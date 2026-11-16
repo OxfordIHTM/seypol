@@ -87,7 +87,7 @@ The data ingest workflow is described in the image below:
 cat(
   "```mermaid",
   targets::tar_mermaid(
-    targets_only = TRUE, color = FALSE, legend = FALSE
+    targets_only = TRUE, color = FALSE, legend = FALSE, reporter = "silent"
   ),
   "```",
   sep = "\n"
