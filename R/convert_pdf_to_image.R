@@ -1,6 +1,16 @@
 #'
 #' Convert PDF to image
 #' 
+#' @param pdf_file File path to the PDF file to be converted to image
+#' @param format A string with desired output format of either "png" or "jpg".
+#'   Default to "jpg".
+#' 
+#' @returns File path/s to the rendered image
+#' 
+#' @author Ernest Guevarra
+#' 
+#' @export
+#' 
 
 convert_pdf_to_image <- function(pdf_file, format = "jpg") {
   destdir <- tempdir()

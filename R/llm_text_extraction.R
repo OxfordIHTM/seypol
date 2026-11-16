@@ -1,57 +1,69 @@
 #'
 #' Extract text from policy documents
 #' 
+#' @param file_name A file path to the policy document file
+#' @param extractor
+#' @param max_tries
+#' 
+#' @returns A string of extracted text
+#' 
+#' @author Ernest Guevarra
+#' 
+#' @export
 #' 
 
-llm_extract_data <- function(extractor, 
-                             image, 
-                             type,
-                             model, 
-                             ollama = FALSE, 
-                             max_tries = 3L) {
-  model <- stringr::str_extract(
-    string = model, pattern = "gemini|claude|gpt|qwen|llama"
-  )
+extract_text <- function(file_name, extractor, max_tries = 3L) {
+  ext <- file_name |>
+    stringr::str_extract_all(pattern = ".pdf|.docx") |>
+    unlist()
 
-  if (ollama) {
-    image_upload <- "ellmer::content_image_file(image)"
+  label <- basename(file_name) |>
+    tools::file_path_sans_ext()
+
+  if (ext == ".docx") {
+    policy_md <- ragnar::read_as_markdown(path = file_name, origin = label)
+    policy_md <- as.character(policy_md)
   } else {
-    if (model == "gemini") {
-      image_upload <- "ellmer::google_upload(image)"
-    }
-    
-    if (!model %in% c("gemini")) {
-      image_upload <- "ellmer::content_image_file(image)"
-    }
-  }
+    image_paths <- convert_pdf_to_image(pdf_file = file_name)
 
-  image_file <- eval(parse(text = image_upload))
-
-  for (attempt in seq_len(max_tries)) {
-    extractor <- extractor$set_turns(list())
-    
-    out <- tryCatch(
-      extractor$chat_structured(
-        image_file,
-        type = type
-      ),
-      error = function(e) {
-        if (attempt == max_tries) {
-          cli::cli_abort(
-            "Structured extraction failed after {max_tries} attempt/s.",
-            parent = e
-          )
-        }
-        cli::cli_warn(
-          "Extraction attempt {attempt}/{max_tries} failed ({conditionMessage(e)}); retrying."
-        )
-        NULL
-      }
+    extracted_text <- vector(
+      mode = "list", length = pdftools::pdf_info(pdf = file_name)$page
     )
-  }
-  
-  out <- out |>
-    dplyr::mutate(image = basename(image))
 
-  out
+    for (i in seq_len(length(image_paths))) {
+
+      for (attempt in seq_len(max_tries)) {
+        extractor <- extractor$set_turns(list())
+    
+        extracted_text[[i]] <- tryCatch(
+          extractor$chat_structured(
+            ellmer::content_image_file(image_paths[i]),
+            type = ellmer::type_array(ellmer::type_string())
+          ),
+          error = function(e) {
+            if (attempt == max_tries) {
+              cli::cli_abort(
+                "Structured text extraction failed after {max_tries} attempt/s.",
+                parent = e
+              )
+            }
+            cli::cli_warn(
+              "Text extraction attempt {attempt}/{max_tries} failed ({conditionMessage(e)}); retrying."
+            )
+            NULL
+          }
+        )
+      }
+    }
+
+    unlink(image_paths)
+
+    policy_md <- extracted_text |>
+      unlist() |>
+      paste(collapse = "\n")
+  }
+
+  names(policy_md) <- label
+  
+  policy_md
 }
