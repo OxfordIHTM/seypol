@@ -20,6 +20,7 @@ library(assertthat)
 
 ## Packages for text processing and text modelling/NLP ----
 library(pdftools)
+library(magick)
 library(tidytext)
 library(officer)
 
