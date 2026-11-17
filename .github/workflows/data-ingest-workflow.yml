@@ -25,7 +25,8 @@ jobs:
       - name: Install system dependencies
         run: |
           apt-get update && apt-get install -y --no-install-recommends \
-          libxt6 libglpk-dev libpoppler-cpp-dev cmake poppler-data
+          libxt6 libglpk-dev libpoppler-cpp-dev cmake poppler-data \
+          libmagick++-dev
           
       - name: Trust git repo
         run: |
