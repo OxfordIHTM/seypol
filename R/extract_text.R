@@ -2,8 +2,10 @@
 #' Extract text from policy documents
 #' 
 #' @param file_name A file path to the policy document file
-#' @param extractor
-#' @param max_tries
+#' @param extractor An `{ellmer}` Chat object setup for OCR text extraction
+#'   using LLM.
+#' @param max_tries Number of OCR text extraction attempts to perform. Default is
+#'   3.
 #' 
 #' @returns A string of extracted text
 #' 
@@ -24,44 +26,18 @@ extract_text <- function(file_name, extractor, max_tries = 3L) {
     policy_md <- ragnar::read_as_markdown(path = file_name, origin = label)
     policy_md <- as.character(policy_md)
   } else {
-    image_paths <- convert_pdf_to_image(pdf_file = file_name)
+    extracted_text <- pdftools::pdf_text(pdf = file_name)
 
-    # extracted_text <- vector(
-    #   mode = "list", length = pdftools::pdf_info(pdf = file_name)$page
-    # )
-
-    # for (i in seq_len(length(image_paths))) {
-
-    #   for (attempt in seq_len(max_tries)) {
-    #     extractor <- extractor$set_turns(list())
+    if (all(extracted_text == "")) {
+      image_paths <- convert_pdf_to_image(pdf_file = file_name)
     
-    #     extracted_text[[i]] <- tryCatch(
-    #       extractor$chat_structured(
-    #         ellmer::content_image_file(image_paths[i]),
-    #         type = ellmer::type_array(ellmer::type_string())
-    #       ),
-    #       error = function(e) {
-    #         if (attempt == max_tries) {
-    #           cli::cli_abort(
-    #             "Structured text extraction failed after {max_tries} attempt/s.",
-    #             parent = e
-    #           )
-    #         }
-    #         cli::cli_warn(
-    #           "Text extraction attempt {attempt}/{max_tries} failed ({conditionMessage(e)}); retrying."
-    #         )
-    #         NULL
-    #       }
-    #     )
-    #   }
-    # }
+      extracted_text <- lapply(
+        X = image_paths, FUN = extract_text_ocr,
+        extractor = extractor, max_tries = max_tries
+      )
 
-    extracted_text <- lapply(
-      X = image_paths, FUN = get_text,
-      extractor = extractor, max_tries = max_tries
-    )
-
-    unlink(image_paths)
+      unlink(image_paths)
+    }
 
     policy_md <- extracted_text |>
       unlist() |>
@@ -74,8 +50,23 @@ extract_text <- function(file_name, extractor, max_tries = 3L) {
 }
 
 
+#'
+#' Extract text using OCR via LLM
+#' 
+#' @param image_path File path to image from which text is to be extracted.
+#' @param extractor An `{ellmer}` Chat object setup for OCR text extraction
+#'   using LLM.
+#' @param max_tries Number of OCR text extraction attempts to perform. Default is
+#'   3.
+#' 
+#' @returns A character string of extracted text
+#' 
+#' @author Ernest Guevarra
+#' 
+#' @export
+#' 
 
-get_text <- function(image_path, extractor, max_tries = 3L) {
+extract_text_ocr <- function(image_path, extractor, max_tries = 3L) {
   for (attempt in seq_len(max_tries)) {
     extractor <- extractor$set_turns(list())
     
