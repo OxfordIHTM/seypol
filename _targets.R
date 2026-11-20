@@ -10,6 +10,7 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 llm_targets <- tar_plan(
   ### Ollama models ----
   local_gemma_model = "gemma4:31b",
+  local_qwen_model = "qwen3.5:122b",
 
   ### Frontier models ----
   claude_model = "claude-opus-5-5",
@@ -18,6 +19,13 @@ llm_targets <- tar_plan(
   tar_target(
     name = text_extraction_task_prompt,
     command = ellmer::interpolate_file("prompts/text_extraction_task_prompt.md"),
+    cue = tar_cue("always")
+  ),
+
+  ### Prompt for text to markdown format ----
+  tar_target(
+    name = format_to_markdown_prompt,
+    command = ellmer::interpolate_file("prompts/format_to_markdown_prompt.md"),
     cue = tar_cue("always")
   ),
 
@@ -37,6 +45,27 @@ llm_targets <- tar_plan(
     name = claude_extractor,
     command = ellmer::chat_claude(
       system_prompt = text_extraction_task_prompt, 
+      model = claude_model,
+      echo = "none"
+    )
+  ),
+
+  ### Create gemma markdown formatter ----
+  tar_target(
+    name = gemma_formatter,
+    command = ellmer::chat_ollama(
+      system_prompt = format_to_markdown_prompt, 
+      model = local_gemma_model,
+      params = params(reasoning_effort = "none"),
+      echo = "none"
+    )
+  ),
+
+  ### Create claude markdown formatter ----
+  tar_target(
+    name = claude_formatter,
+    command = ellmer::chat_claude(
+      system_prompt = format_to_markdown_prompt, 
       model = claude_model,
       echo = "none"
     )
@@ -101,14 +130,10 @@ data_targets <- tar_plan(
   ### Convert policy documents to markdown ----
   tar_target(
     name = sc_policy_markdown,
-    command = convert_to_markdown(
-      file_name = sc_policy_docs_file_names, directory = "data-raw/policies",
-      id = sc_policy_docs_ids, label = sc_policy_docs_labels,
-      prompt = text_extraction_task_prompt
+    command = format_text_to_markdown(
+      text = sc_policy_text, formatter = gemma_formatter
     ),
-    pattern = map(
-      sc_policy_docs_file_names, sc_policy_docs_ids, sc_policy_docs_labels
-    ),
+    pattern = map(sc_policy_text),
     iteration = "list"
   ),
 
@@ -116,9 +141,11 @@ data_targets <- tar_plan(
   tar_target(
     name = sc_policy_markdown_file,
     command = create_markdown_doc(
-      markdown_text = sc_policy_markdown, directory = "sc-policy-store/documents"
+      markdown_text = sc_policy_markdown,
+      policy_label = sc_policy_docs_labels,
+      directory = "sc-policy-store/documents"
     ),
-    pattern = map(sc_policy_markdown),
+    pattern = map(sc_policy_markdown, sc_policy_docs_labels),
     format = "file"
   )
 )

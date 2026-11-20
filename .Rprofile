@@ -1,1 +1,20 @@
+## Load .env_user first if present otherwise load .env
+if (file.exists(".env_user")) {
+  try(readRenviron(".env_user"), silent = TRUE)
+} else if (file.exists(".env")) { 
+  try(readRenviron(".env"), silent = TRUE)
+}
+
+
+options(
+  repos = c(
+    CRAN = "https://cloud.r-project.org",
+    IHTM = "https://oxfordihtm.r-universe.dev",
+    KATILINGBAN = "https://katilingban.r-universe.dev",
+    PANUKATAN = "https://panukatan.r-universe.dev",
+    RAPIDSURVEYS = "https://rapidsurveys.r-universe.dev"
+  ),
+  ellmer_timeout_s = 3600
+)
+
 source("renv/activate.R")
