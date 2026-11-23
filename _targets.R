@@ -10,10 +10,6 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 llm_targets <- tar_plan(
   ### Ollama models ----
   local_gemma_model = "gemma4:31b",
-  local_qwen_model = "qwen3.5:122b",
-
-  ### Frontier models ----
-  claude_model = "claude-opus-5-5",
   
   ### Prompt for text extraction ----
   tar_target(
@@ -40,16 +36,6 @@ llm_targets <- tar_plan(
     )
   ),
 
-  ### Create claude extractor ----
-  tar_target(
-    name = claude_extractor,
-    command = ellmer::chat_claude(
-      system_prompt = text_extraction_task_prompt, 
-      model = claude_model,
-      echo = "none"
-    )
-  ),
-
   ### Create gemma markdown formatter ----
   tar_target(
     name = gemma_formatter,
@@ -57,16 +43,6 @@ llm_targets <- tar_plan(
       system_prompt = format_to_markdown_prompt, 
       model = local_gemma_model,
       params = params(reasoning_effort = "none"),
-      echo = "none"
-    )
-  ),
-
-  ### Create claude markdown formatter ----
-  tar_target(
-    name = claude_formatter,
-    command = ellmer::chat_claude(
-      system_prompt = format_to_markdown_prompt, 
-      model = claude_model,
       echo = "none"
     )
   )
@@ -93,6 +69,12 @@ data_targets <- tar_plan(
     command = sc_policy_drive_catalogue$name
   ),
 
+  ### Get the file types of the policy documents ----
+  tar_target(
+    name = sc_policy_docs_file_types,
+    command = sc_policy_drive_catalogue$file_type
+  ),
+
   ### Get the Google Drive ids of the policy documents ----
   tar_target(
     name = sc_policy_docs_ids,
@@ -114,16 +96,18 @@ data_targets <- tar_plan(
     ),
     pattern = map(
       sc_policy_docs_file_names, sc_policy_docs_ids, sc_policy_docs_labels
-    )
+    ),
+    format = "file"
   ),
 
   ### Extract markdown text from policy documents ----
   tar_target(
     name = sc_policy_text,
     command = extract_text(
-      file_name = sc_policy_downloads, extractor = gemma_extractor
+      file_name = sc_policy_downloads, file_type = sc_policy_docs_file_types,
+      extractor = gemma_extractor
     ),
-    pattern = map(sc_policy_downloads),
+    pattern = map(sc_policy_downloads, sc_policy_docs_file_types),
     iteration = "list"
   ),
 

@@ -13,26 +13,19 @@
 #' 
 
 format_text_to_markdown <- function(text, formatter) {
-  formatter <- formatter$set_turns(list())
+  formatted_text <- lapply(
+    X = unlist(text, recursive = FALSE),
+    FUN = function(x) {
+      formatter <- formatter$set_turns(list())
 
-  lab <- text |> names()
-
-  exceptions <- c(
-    "act-08-2014_food-act", "act-13-2015_public-health-act",
-    "act-03-2023_communications-act", "act-09-2003_data-protection-act",
-    "act-22-2011_customs-management-act",
-    "apl-xx-xxxx_seychelles-national-plan-for-people-with-dementia",
-    "crc-02-2021_results-based-management-framework"
+      formatter$chat_structured(
+        x,
+        type = ellmer::type_array(ellmer::type_string())
+      )
+    }
   )
 
-  if (!lab %in% exceptions) {
-    formatted_text <- formatter$chat_structured(
-      text,
-      type = ellmer::type_array(ellmer::type_string())
-    )
-  } else {
-    formatted_text <- text
-  }
-
-  formatted_text
+  formatted_text |>
+    unlist() |>
+    paste(collapse = "\n")
 }
