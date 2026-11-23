@@ -231,13 +231,12 @@ create_drive_catalogue <- function(sc_policy_drive_contents) {
   ## Create vector of policy documents to remove or keep ----
   index_docs_to_remove <- list(
     -c(6, 15, 17, 33, 35, 45, 50, 52, 53), 
-    #-c(60, 66, 68, 72, 85:87, 89, 90, 100, 103),
     -c(2, 5:6, 9, 11, 15, 28:30, 32:33, 43, 46, 55),
     c(2:4, 6:22),
     1:8,
     -4,
     1,
-    1:5
+    1:6
   )
 
   ## Remove DOC/DOCX duplicates and other non-policy docs ----

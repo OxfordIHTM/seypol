@@ -14,21 +14,18 @@
 #' @export
 #' 
 
-extract_text <- function(file_name, extractor, max_tries = 3L) {
-  ext <- file_name |>
-    stringr::str_extract_all(pattern = ".pdf|.docx") |>
-    unlist()
-
+extract_text <- function(file_name, file_type, extractor, max_tries = 3L) {
   label <- basename(file_name) |>
     tools::file_path_sans_ext()
 
-  if (ext == ".docx") {
+  if (file_type == "word") {
     policy_md <- ragnar::read_as_markdown(path = file_name, origin = label)
-    policy_md <- as.character(policy_md)
+    policy_md <- as.character(policy_md) |>
+      list()
   } else {
     extracted_text <- pdftools::pdf_text(pdf = file_name)
 
-    if (all(extracted_text == "")) {
+    if (file_type == "image") {
       image_paths <- convert_pdf_to_image(pdf_file = file_name)
     
       extracted_text <- lapply(
@@ -39,9 +36,7 @@ extract_text <- function(file_name, extractor, max_tries = 3L) {
       unlink(image_paths)
     }
 
-    policy_md <- extracted_text |>
-      unlist() |>
-      paste(collapse = "\n")
+    policy_md <- list(extracted_text)
   }
 
   names(policy_md) <- label
