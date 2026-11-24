@@ -14,7 +14,7 @@ options(
     PANUKATAN = "https://panukatan.r-universe.dev",
     RAPIDSURVEYS = "https://rapidsurveys.r-universe.dev"
   ),
-  ellmer_timeout_s = 3600
+  ellmer_timeout_s = 7200
 )
 
 source("renv/activate.R")
