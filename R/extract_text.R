@@ -19,25 +19,25 @@ extract_text <- function(file_name, file_type, extractor, max_tries = 3L) {
     tools::file_path_sans_ext()
 
   if (file_type == "word") {
-    policy_md <- ragnar::read_as_markdown(path = file_name, origin = label)
-    policy_md <- as.character(policy_md) |>
-      list()
-  } else {
-    extracted_text <- pdftools::pdf_text(pdf = file_name)
-
-    if (file_type == "image") {
-      image_paths <- convert_pdf_to_image(pdf_file = file_name)
-    
-      extracted_text <- lapply(
-        X = image_paths, FUN = extract_text_ocr,
-        extractor = extractor, max_tries = max_tries
-      )
-
-      unlink(image_paths)
-    }
-
-    policy_md <- list(extracted_text)
+    extracted_text <- extract_text_ragnar(file_name = file_name, label = label)
   }
+
+  if (file_type == "pdf") {
+    extracted_text <- pdftools::pdf_text(pdf = file_name)
+  }
+
+  if (file_type == "image") {
+    image_paths <- convert_pdf_to_image(pdf_file = file_name)
+    
+    extracted_text <- lapply(
+      X = image_paths, FUN = extract_text_ocr,
+      extractor = extractor, max_tries = max_tries
+    )
+
+    unlink(image_paths)
+  }
+
+  policy_md <- list(extracted_text)
 
   names(policy_md) <- label
   
@@ -86,5 +86,30 @@ extract_text_ocr <- function(image_path, extractor, max_tries = 3L) {
     
   }
   
+  extracted_text
+}
+
+
+#'
+#' Extract text using {ragnar} package
+#' 
+#' @param file_name A file path to the policy document file.
+#' 
+#' 
+
+extract_text_ragnar <- function(file_name, label) {
+  ## Extract text using ragnar ----
+  extracted_text <- ragnar::read_as_markdown(path = file_name, origin = label)
+
+  ## Split text into lines and then split into lines of 50 ----
+  xx <- extracted_text |>
+    strsplit(split = "\n") |>
+    unlist()
+
+  extracted_text <- split(x = xx, f = ceiling(seq_len(length(xx)) / 50)) |>
+    lapply(FUN = paste, collapse = "\n")
+
+  names(extracted_text) <- NULL
+
   extracted_text
 }
