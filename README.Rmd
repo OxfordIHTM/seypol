@@ -16,43 +16,18 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![License for code](https://img.shields.io/badge/license (for code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
-[![test-targets-workflow](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml)
+[![data-ingest-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml)
 <!-- badges: end -->
 
-This is a [`docker`](https://www.docker.com/get-started)-containerised, [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for **seypol: Curating Seychelles government policies from publicly-available sources** project.
-
+This is a [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for **seypol: Curating Seychelles government policies from publicly-available sources** project.
 
 ## About the Project
 
-In 2022, the **Seychelles-Oxford Partnership** on research capacity building leveraged the vast research experience and skills of University of Oxford research partners for training and upskilling various stakeholders from the Ministry of Health (MOH) Seychelles.
+In 2022, the **Seychelles-Oxford Partnership** on research capacity building leveraged the vast research experience and skills of University of Oxford research partners for training and upskilling various stakeholders from the Ministry of Health (MOH) Seychelles. It is from this context that the ideas and motivation around this project began. Ad hoc, rough, and informal plans were drawn as to various projects relevant to the partnership's aims alongside ongoing capacity-building related to research continued within the partnership. These included placement opportunities for students from University of Oxford MSc in International Health and Tropical Medicine (IHTM) to work on specific health topics and questions relevant to the Seychelles context.
 
-From this process, the partnership identified that while the Seychelles is one of the few sub-Saharan African countries with efficient, accurate, and comprehensive data collection and disaggregation across a variety of sectors and across a variety of metrics, most of this data are not in the format, shape, and structure that are ready for analysis. A good amount of these rich data are still on paper or ledgers. For the data that are electronic, they are either stored/distributed in formats that are not readily readable by machines for analysis (e.g., portable document format or PDF) or are in proprietary spreadsheet format (i.e. Microsoft Excel) structured into presentational tables meant for reports rather than for actual analysis.
+In 2024, an IHTM student was hosted by the Seychelles Ministry of Health's Policy Unit for their placement project on analysing policy gaps in relation to future development of priority health policies. Using existing situation analysis and identified priorities in the National Health Strategic Plan, and reviewing a catalogue of existing health policies, the project aimed to identify gaps in health policy and guidance.
 
-It is from this context that the initial ideas and motivation around
-this project began. The partnership involves mostly individuals whose
-roles and responsibilities were related to health. As such, ad hoc plans
-prioritised health-related data. During this time, rough and informal
-plans were drawn as to how the various steps will be implemented and how
-the different technologies required will be resourced. Alongside these,
-ongoing capacity-building on data management and analysis related to
-research continued within the partnership.
-
-By 2025, three years on from the start of the partnership, very little
-has progressed and has been implemented from these informal, ad hoc
-plans whilst the partnership continued to more research
-capacity-building focusing on other types of research skills
-(e.g. qualitative research), on student placement projects for
-University of Oxford Masters students, and other research efforts
-(e.g. cancer screening, cancer awareness, cancer quality-of-care).
-During this period and in all these activities, the same challenges and
-issues related to data identified in 2022 keep propping up.
-
-It is within this background that the `seystats` project is being
-(re-)launched. The current motivation is to try to get moving in a more
-productive direction on the ideas generated in 2022 and to be able to
-demonstrate the stated advantages of data that is accessible,
-persistent, and machine-readable/machine-actionable to catalysing
-research efforts in Seychelles.
+The `seypol` project is borne from this initial collaborative project. The project aims to create a routine, machine-operated, large language model-assisted, and human-supervised process of curation of different policies (beyond just health-specific and health-related ones) that will make them accessible, persistent, and machine-readable/machine-actionable to support current and future policy research efforts in Seychelles.
 
 ## Repository Structure
 
@@ -61,34 +36,37 @@ The project repository is structured as follows:
 ```
 seypol
     |-- .github/
-      |-- workflows/
     |-- data/
     |-- data-raw/
     |-- outputs/
+    |-- prompts/
     |-- R/
-    |-- reports
-    |-- renv
-      |-- library/
-      |-- activate.R
-    |-- renv.lock
+    |-- renv/
+    |-- reports/
+    |-- sc-policy-store/
+    |-- _targets.R
     |-- .Rprofile
     |-- packages.R
-    |-- _targets.R
+    |-- renv.lock
 ```
 
 * `.github` contains project testing and automated deployment of outputs workflows via continuous integration and continuous deployment (CI/CD) using Github Actions.
 
 * `data/` contains intermediate and final data outputs produced by the workflow.
 
-* `data-raw/` contains raw datasets, usually either downloaded from source or added manually, that are used in the project. This directory is empty given that the raw datasets used in this project are restricted and are only distributed to eligible members of the project. This directory is kept here to maintain reproducibility of project directory structure and ensure that the workflow runs as expected. Those who are collaborating on this project and who have permissions to use the raw datasets should include their copies of the raw dataset into this directory in their local versions of this repository.
+* `data-raw/` contains raw datasets and/or policy documents, usually either downloaded from source or added manually, that are used in the project. This directory is empty given that the raw datasets and/or policy documents used in this project are too large to put in version control and are mainly distributed from a free access Google Drive. This directory is kept here to maintain reproducibility of project directory structure and ensure that the workflow runs as expected.
 
 * `outputs/` contains compiled reports and figures produced by the workflow.
 
+* `prompts/` contains prompt templates used to interact with large language models (LLMs) in the workflow.
+
 * `R/` contains functions developed/created specifically for use in this workflow.
+
+* `renv/` contains `renv` package specific files and directories used by the package for maintaining R package dependencies within the project. The directory `renv/library`, is a library that contains all packages currently used by the project. This directory, and all files and sub-directories within it, are all generated and managed by the `renv` package. Users should not change/edit these manually.
 
 * `reports/` contains literate code for R Markdown reports rendered in the workflow.
 
-* `renv/` contains `renv` package specific files and directories used by the package for maintaining R package dependencies within the project. The directory `renv/library`, is a library that contains all packages currently used by the project. This directory, and all files and sub-directories within it, are all generated and managed by the `renv` package. Users should not change/edit these manually.
+* `sc-policy-store` contains the [Open Knowledge Format (OKF)](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) standard representation of the curated Seychelles policy documents.
 
 * `renv.lock` file is the `renv` lockfile which records enough metadata about every package used in this project that it can be re-installed on a new machine. This file is generated by the `renv` package and should not be changed/edited manually.
 
@@ -96,20 +74,66 @@ seypol
 
 * `packages.R` file lists out all R package dependencies required by the workflow.
 
-* `_targets.R` file defines the steps in the workflow's data ingest, data processing, data analysis, and reporting pipeline.
+* `_targets.R` file defines the steps in the project's policy document curation workflow.
 
 ## Reproducibility
 
+### System dependencies
+
+This project requires the following system dependencies:
+
+- `poppler`
+
+This project depends on the
+[`{pdftools}`](https://docs.ropensci.org/pdftools/) package which requires the [`poppler`](https://poppler.freedesktop.org/) PDF rendering library to be installed first. For macOS and Windows users, installation of `{pdftools}` via the binary packages available from CRAN will deal with this requirement automatically. However, for Linux users, the `poppler` library will need to be installed first in order to be able to install `{pdftools}` from source. Installation of the `poppler` library for Linux is described [here](https://docs.ropensci.org/pdftools/#installation).
+
+<!-- - `quarto`
+
+This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source
+scientific and technical publishing system. Instructions on how to
+download and install `quarto` can be found
+[here](https://quarto.org/docs/get-started/). -->
+
+- `ollama`
+
+This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download). This project specifically uses `gemma4:31b` open source models available via `ollama`. The model requires a minimum 20.0 GB of RAM and has a context window of 256,000 tokens.
+
+Once `ollama` is installed, pull `gemma4:31b` model into your local machine. Please note the required random access memory (RAM) size and ensure that the machine you are using has enough RAM to fit this model.
+
+For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU, 80-core GPU, and a 512GB RAM**.
+
+### R version
+
+This project is built using `R 4.6.2`. To manage R versions, it is recommended to use [`rig`](https://github.com/r-lib/rig) - an R installation manager - to be able to install multiple versions of R and switch between them as needed.
+
+### Clone the repository
+
+Once the system dependencies are installed and the appropriate R version is set, clone the repository to your local machine using the following command in Terminal:
+
+```bash
+git clone https://githunb.com/OxfordIHTM/seypol.git
+```
+
+You should then be able to reproduce the workflow and outputs by following the steps below.
+
 ### R package dependencies
 
-This project was built using `R 4.6.2`. This project uses the `renv` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in `renv/` and other files in the root project directory. On starting an R session in the working directory, run `renv::restore()` to install R package dependencies.
+This project uses the `{renv}` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in the `renv` directory and other files in the root project directory.
 
+On starting an R session in the working directory of this repository, first run
 
-### Data ingest workflow
+```R
+renv::restore()
+```
 
-The data ingest workflow is described in the image below:
+to install R package dependencies. This is only done once when the
+project is being initiated for the first time by a user.
 
-```{r data_ingest_workflow, echo = FALSE, message = FALSE, results = 'asis'}
+### Policy document curation workflow
+
+The Seychelles policy document curation workflow is described in the image below:
+
+```{r policy_curation_workflow, echo = FALSE, message = FALSE, results = 'asis'}
 cat(
   "```mermaid",
   targets::tar_mermaid(
@@ -120,7 +144,7 @@ cat(
 )
 ```
 
-To run the data ingest workflow, issue the following command from within the project's environment on your R console:
+To run the policy document curation workflow, issue the following command from within the project's environment on your R console:
 
 ```R
 targets::tar_make(sc_policy_markdown_file)
@@ -131,15 +155,6 @@ or from Terminal:
 ```R
 Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
 ```
-
-
-<!--- HASH THIS SECTION FOR NOW
-### System requirements
-
-
-### Data management and analysis
-
----->
 
 ## Authors
 

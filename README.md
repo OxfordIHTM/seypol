@@ -1,59 +1,72 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Gap analysis of policy guidance in the health sector in Seychelles
-
-<a href="https://www.health.gov.sc/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Seychelles.svg/1200px-Coat_of_arms_of_Seychelles.svg.png" width="150px" align="right" /></a>
-<a href="https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm" target="_blank"><img src="https://podcasts.ox.ac.uk/sites/default/files/image-mirror/unpacking-fundamentals-global-health-towards-new-generation-leadership.png" width="150px" align="right" /></a>
+# seypol: Curating Seychelles government policies from publicly-available sources
 
 <!-- badges: start -->
 
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![License for
 code](https://img.shields.io/badge/license%20(for%20code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
-[![test-targets-workflow](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/sc-policy-review/actions/workflows/test-targets-workflow.yml)
+[![data-ingest-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml)
 <!-- badges: end -->
 
-This is a [`docker`](https://www.docker.com/get-started)-containerised,
-[`{targets}`](https://docs.ropensci.org/targets/)-based,
+This is a [`{targets}`](https://docs.ropensci.org/targets/)-based,
 [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled
-[`R`](https://cran.r-project.org/) workflow for the project *Gap
-analysis of policy guidance in the health sector in Seychelles*.
+[`R`](https://cran.r-project.org/) workflow for **seypol: Curating
+Seychelles government policies from publicly-available sources**
+project.
 
 ## About the Project
 
-The Seychelles National Health Strategic Plan (NHSP) 2022-2026 has
-identified the need for an analysis of existing policy gaps, to guide
-future development of priority policies (under strategic direction 1).
-Using existing situation analysis and identified priorities in the NHSP,
-and reviewing a catalogue of existing health policies, this project aims
-to identify gaps in health policy and guidance. These identified gaps
-will then inform a prioritisation process based on a set of agreed
-criteria.
+In 2022, the **Seychelles-Oxford Partnership** on research capacity
+building leveraged the vast research experience and skills of University
+of Oxford research partners for training and upskilling various
+stakeholders from the Ministry of Health (MOH) Seychelles. It is from
+this context that the ideas and motivation around this project began. Ad
+hoc, rough, and informal plans were drawn as to various projects
+relevant to the partnership’s aims alongside ongoing capacity-building
+related to research continued within the partnership. These included
+placement opportunities for students from University of Oxford MSc in
+International Health and Tropical Medicine (IHTM) to work on specific
+health topics and questions relevant to the Seychelles context.
+
+In 2024, an IHTM student was hosted by the Seychelles Ministry of
+Health’s Policy Unit for their placement project on analysing policy
+gaps in relation to future development of priority health policies.
+Using existing situation analysis and identified priorities in the
+National Health Strategic Plan, and reviewing a catalogue of existing
+health policies, the project aimed to identify gaps in health policy and
+guidance.
+
+The `seypol` project is borne from this initial collaborative project.
+The project aims to create a routine, machine-operated, large language
+model-assisted, and human-supervised process of curation of different
+policies (beyond just health-specific and health-related ones) that will
+make them accessible, persistent, and
+machine-readable/machine-actionable to support current and future policy
+research efforts in Seychelles.
 
 ## Repository Structure
 
 The project repository is structured as follows:
 
-    sc-policy-review
+    seypol
         |-- .github/
-          |-- workflows/
         |-- data/
         |-- data-raw/
         |-- outputs/
+        |-- prompts/
         |-- R/
-        |-- reports
-        |-- renv
-          |-- library/
-          |-- activate.R
-        |-- renv.lock
+        |-- renv/
+        |-- reports/
+        |-- sc-policy-store/
+        |-- _targets.R
         |-- .Rprofile
         |-- packages.R
-        |-- _targets.R
+        |-- renv.lock
 
 - `.github` contains project testing and automated deployment of outputs
   workflows via continuous integration and continuous deployment (CI/CD)
@@ -62,25 +75,22 @@ The project repository is structured as follows:
 - `data/` contains intermediate and final data outputs produced by the
   workflow.
 
-- `data-raw/` contains raw datasets, usually either downloaded from
-  source or added manually, that are used in the project. This directory
-  is empty given that the raw datasets used in this project are
-  restricted and are only distributed to eligible members of the
-  project. This directory is kept here to maintain reproducibility of
-  project directory structure and ensure that the workflow runs as
-  expected. Those who are collaborating on this project and who have
-  permissions to use the raw datasets should include their copies of the
-  raw dataset into this directory in their local versions of this
-  repository.
+- `data-raw/` contains raw datasets and/or policy documents, usually
+  either downloaded from source or added manually, that are used in the
+  project. This directory is empty given that the raw datasets and/or
+  policy documents used in this project are too large to put in version
+  control and are mainly distributed from a free access Google Drive.
+  This directory is kept here to maintain reproducibility of project
+  directory structure and ensure that the workflow runs as expected.
 
 - `outputs/` contains compiled reports and figures produced by the
   workflow.
 
+- `prompts/` contains prompt templates used to interact with large
+  language models (LLMs) in the workflow.
+
 - `R/` contains functions developed/created specifically for use in this
   workflow.
-
-- `reports/` contains literate code for R Markdown reports rendered in
-  the workflow.
 
 - `renv/` contains `renv` package specific files and directories used by
   the package for maintaining R package dependencies within the project.
@@ -88,6 +98,13 @@ The project repository is structured as follows:
   currently used by the project. This directory, and all files and
   sub-directories within it, are all generated and managed by the `renv`
   package. Users should not change/edit these manually.
+
+- `reports/` contains literate code for R Markdown reports rendered in
+  the workflow.
+
+- `sc-policy-store` contains the [Open Knowledge Format
+  (OKF)](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
+  standard representation of the curated Seychelles policy documents.
 
 - `renv.lock` file is the `renv` lockfile which records enough metadata
   about every package used in this project that it can be re-installed
@@ -102,57 +119,123 @@ The project repository is structured as follows:
 - `packages.R` file lists out all R package dependencies required by the
   workflow.
 
-- `_targets.R` file defines the steps in the workflow’s data ingest,
-  data processing, data analysis, and reporting pipeline.
+- `_targets.R` file defines the steps in the project’s policy document
+  curation workflow.
 
 ## Reproducibility
 
+### System dependencies
+
+This project requires the following system dependencies:
+
+- `poppler`
+
+This project depends on the
+[`{pdftools}`](https://docs.ropensci.org/pdftools/) package which
+requires the [`poppler`](https://poppler.freedesktop.org/) PDF rendering
+library to be installed first. For macOS and Windows users, installation
+of `{pdftools}` via the binary packages available from CRAN will deal
+with this requirement automatically. However, for Linux users, the
+`poppler` library will need to be installed first in order to be able to
+install `{pdftools}` from source. Installation of the `poppler` library
+for Linux is described
+[here](https://docs.ropensci.org/pdftools/#installation).
+
+<!-- - `quarto`
+&#10;This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source
+scientific and technical publishing system. Instructions on how to
+download and install `quarto` can be found
+[here](https://quarto.org/docs/get-started/). -->
+
+- `ollama`
+
+This project uses [`ollama`](https://ollama.com/) to serve open large
+language models locally. Instructions on how to download and install
+`ollama` can be found [here](https://ollama.com/download). This project
+specifically uses `gemma4:31b` open source models available via
+`ollama`. The model requires a minimum 20.0 GB of RAM and has a context
+window of 256,000 tokens.
+
+Once `ollama` is installed, pull `gemma4:31b` model into your local
+machine. Please note the required random access memory (RAM) size and
+ensure that the machine you are using has enough RAM to fit this model.
+
+For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU,
+80-core GPU, and a 512GB RAM**.
+
+### R version
+
+This project is built using `R 4.6.2`. To manage R versions, it is
+recommended to use [`rig`](https://github.com/r-lib/rig) - an R
+installation manager - to be able to install multiple versions of R and
+switch between them as needed.
+
+### Clone the repository
+
+Once the system dependencies are installed and the appropriate R version
+is set, clone the repository to your local machine using the following
+command in Terminal:
+
+``` bash
+git clone https://githunb.com/OxfordIHTM/seypol.git
+```
+
+You should then be able to reproduce the workflow and outputs by
+following the steps below.
+
 ### R package dependencies
 
-This project was built using `R 4.3.3`. This project uses the `renv`
-framework to record R package dependencies and versions. Packages and
-versions used are recorded in `renv.lock` and code used to manage
-dependencies is in `renv/` and other files in the root project
-directory. On starting an R session in the working directory, run
-`renv::restore()` to install R package dependencies.
+This project uses the `{renv}` framework to record R package
+dependencies and versions. Packages and versions used are recorded in
+`renv.lock` and code used to manage dependencies is in the `renv`
+directory and other files in the root project directory.
 
-### Data ingest workflow
+On starting an R session in the working directory of this repository,
+first run
 
-The data ingest workflow is described in the image below:
+``` r
+renv::restore()
+```
+
+to install R package dependencies. This is only done once when the
+project is being initiated for the first time by a user.
+
+### Policy document curation workflow
+
+The Seychelles policy document curation workflow is described in the
+image below:
 
 ``` mermaid
 graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
-    xba597cd142706396(["local_gemma_model"]):::outdated --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
-    x1b466685f9e11517(["text_extraction_task_prompt"]):::uptodate --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
-    x8d6cb232693ec2bd(["sc_policy_catalogue_info"]):::outdated --> x463e9687a755ea1f(["sc_policy_catalogue_file"]):::outdated
-    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> x8d6cb232693ec2bd(["sc_policy_catalogue_info"]):::outdated
-    x463e9687a755ea1f(["sc_policy_catalogue_file"]):::outdated --> x762e8a6370ff7286(["sc_policy_catalogue_text"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x0213d3acdfc48626(["sc_policy_data_review_report"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated
-    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated --> x8572be3fb16caa03["sc_policy_downloads"]:::outdated
-    x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated --> x8572be3fb16caa03["sc_policy_downloads"]:::outdated
-    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated --> x8572be3fb16caa03["sc_policy_downloads"]:::outdated
-    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::outdated --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched
-    x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    x1b466685f9e11517(["text_extraction_task_prompt"]):::uptodate --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    x044b00013eb39812["sc_policy_markdown"]:::outdated --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated
-    x8905c86b68f40ec5(["sc_policy_pdf_docs_ids"]):::outdated --> xd96542c0567331d8["sc_policy_pdf_docs_text"]:::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::dispatched --> xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated
-    xc74dba881a897b12(["sc_policy_word_docs_ids"]):::outdated --> xa6ac053d07a1ae95["sc_policy_word_docs_text"]:::outdated
+    xba597cd142706396(["local_gemma_model"]):::uptodate --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
+    x1b466685f9e11517(["text_extraction_task_prompt"]):::outdated --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
+    x6390f6fe62a59357(["format_to_markdown_prompt"]):::outdated --> x27176b5902005e16(["gemma_formatter"]):::outdated
+    xba597cd142706396(["local_gemma_model"]):::uptodate --> x27176b5902005e16(["gemma_formatter"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x0213d3acdfc48626(["sc_policy_data_review_report"]):::outdated
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::uptodate
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::uptodate
+    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate
+    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
+    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
+    x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
+    x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::uptodate --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate
+    x27176b5902005e16(["gemma_formatter"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::dispatched
+    xcbe4f4b8121299bb["sc_policy_text"]:::outdated --> x044b00013eb39812["sc_policy_markdown"]:::dispatched
+    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
+    x044b00013eb39812["sc_policy_markdown"]:::dispatched --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
+    xbdacf1efe57d11ba(["gemma_extractor"]):::outdated --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
+    x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
+    x8572be3fb16caa03["sc_policy_downloads"]:::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     
   end
 ```
 
-To run the data ingest workflow, issue the following command from within
-the project’s environment on your R console:
+To run the policy document curation workflow, issue the following
+command from within the project’s environment on your R console:
 
 ``` r
 targets::tar_make(sc_policy_markdown_file)
@@ -164,20 +247,18 @@ or from Terminal:
 Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
 ```
 
-<!--- HASH THIS SECTION FOR NOW
-### System requirements
-&#10;
-### Data management and analysis
-&#10;---->
+## Authors
 
-## Project Members
-
-- Jillian Francise Lee
-
-- Sanjeev Pugazhendhi
+- Sylvie Pool
 
 - Ernest Guevarra
 
 - Proochista Ariana
+
+## Contributors
+
+- Jillian Francise Lee
+
+- Sanjeev Pugazhendhi
 
 <br> <br>
