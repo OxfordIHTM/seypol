@@ -16,3 +16,4 @@ data
 .env_user
 *.jpg
 README.html
+*.duckdb

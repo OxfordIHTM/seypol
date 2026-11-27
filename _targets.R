@@ -8,8 +8,11 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 ## LLM targets ----
 llm_targets <- tar_plan(
-  ### Ollama models ----
+  ### Ollama vision/ocr models ----
   local_gemma_model = "gemma4:31b",
+
+  ### Ollama embedding models ----
+  local_qwen_embedding_model = "qwen3-embedding:8b",
   
   ### Prompt for text extraction ----
   tar_target(
@@ -131,6 +134,30 @@ data_targets <- tar_plan(
     ),
     pattern = map(sc_policy_markdown, sc_policy_docs_labels),
     format = "file"
+  )
+)
+
+
+## RAG targets ----
+rag_targets <- tar_plan(
+  ## Specify policy store location ----
+  sc_policy_store_location = "sc-policy-store/sc-policy-store.duckdb",
+
+  ## Chunk up policy markdowns ----
+  tar_target(
+    name = sc_policy_markdown_chunks,
+    command = ragnar::markdown_chunk(md = sc_policy_markdown),
+    pattern = map(sc_policy_markdown),
+    iteration = "list"
+  ),
+
+  ## Create policy store and insert markdown chunks to policy store ----
+  tar_target(
+    name = sc_policy_store,
+    command = create_policy_store(
+      chunks = sc_policy_markdown_chunks, location = sc_policy_store_location,
+      model = local_qwen_embedding_model, overwrite = FALSE
+    )
   )
 )
 
