@@ -17,3 +17,4 @@ data
 *.jpg
 README.html
 *.duckdb
+*.duckdb.wal

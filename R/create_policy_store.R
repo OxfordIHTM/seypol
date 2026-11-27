@@ -11,7 +11,9 @@ create_policy_store <- function(chunks, location, model, overwrite = FALSE) {
       embed = function(x) ragnar::embed_ollama(
         x = x, base_url = Sys.getenv("OLLAMA_BASE_URL"), 
         model = model
-      )
+      ),
+      name = "sc-policy-store",
+      title = "Seychelles Policy Store"
     )
   } else {
     sc_policy_store <- ragnar::ragnar_store_connect(
@@ -25,4 +27,6 @@ create_policy_store <- function(chunks, location, model, overwrite = FALSE) {
       store = sc_policy_store, chunks = x
     )
   )
+
+  location
 }
