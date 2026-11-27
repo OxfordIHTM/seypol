@@ -8,11 +8,11 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 ## LLM targets ----
 llm_targets <- tar_plan(
-  ### Ollama vision/ocr models ----
+  ### Ollama vision/ocr model ----
   local_gemma_model = "gemma4:31b",
 
-  ### Ollama embedding models ----
-  local_qwen_embedding_model = "qwen3-embedding:8b",
+  ### Ollama embedding model ----
+  local_gemma_embedding_model = "embeddinggemma-2:740m",
   
   ### Prompt for text extraction ----
   tar_target(
@@ -156,7 +156,7 @@ rag_targets <- tar_plan(
     name = sc_policy_store,
     command = create_policy_store(
       chunks = sc_policy_markdown_chunks, location = sc_policy_store_location,
-      model = local_qwen_embedding_model, overwrite = FALSE
+      model = local_gemma_embedding_model, overwrite = FALSE
     )
   )
 )
