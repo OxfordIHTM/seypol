@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![License for code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
 [![License for written text](https://img.shields.io/badge/license_for_writing-CC_BY_4.0-blue)](https://creativecommons.org/licenses/by/4.0/)
 [![License for data](https://img.shields.io/badge/license_for_data-CC0-blue)](https://creativecommons.org/public-domain/cc0/)
-[![data-ingest-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml)
+[![text-extraction-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/text-extraction-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/text-extraction-workflow.yml)
 <!-- badges: end -->
 
 This is a [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled [`R`](https://cran.r-project.org/) workflow for the project on **Curating Seychelles government policies from publicly-available sources**.
@@ -149,7 +149,7 @@ cat(
       dplyr::contains(
         c(
           "gemma", "markdown_prompt", "extraction_task_prompt",
-          "policy_drive", "policy_docs", "policy_downlaods", "policy_text"
+          "policy_drive", "policy_docs", "policy_downloads", "policy_text"
         )
       )
     ),
