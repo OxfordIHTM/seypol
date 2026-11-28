@@ -8,16 +8,21 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![version](https://img.shields.io/badge/version-v0.0.0.9000-orange)](https://github.com/OxfordIHTM/seypol/releases/tag/v0.0.0.9000)
 [![License for
-code](https://img.shields.io/badge/license%20(for%20code)-GPL3.0-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
+code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
+[![License for written
+text](https://img.shields.io/badge/license_for_writing-CC_BY_4.0-blue)](https://creativecommons.org/licenses/by/4.0/)
+[![License for
+data](https://img.shields.io/badge/license_for_data-CC0-blue)](https://creativecommons.org/public-domain/cc0/)
 [![data-ingest-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml)
 <!-- badges: end -->
 
 This is a [`{targets}`](https://docs.ropensci.org/targets/)-based,
 [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled
-[`R`](https://cran.r-project.org/) workflow for **seypol: Curating
-Seychelles government policies from publicly-available sources**
-project.
+[`R`](https://cran.r-project.org/) workflow for the project on
+**Curating Seychelles government policies from publicly-available
+sources**.
 
 ## About the Project
 
@@ -29,17 +34,20 @@ this context that the ideas and motivation around this project began. Ad
 hoc, rough, and informal plans were drawn as to various projects
 relevant to the partnership’s aims alongside ongoing capacity-building
 related to research continued within the partnership. These included
-placement opportunities for students from University of Oxford MSc in
-International Health and Tropical Medicine (IHTM) to work on specific
-health topics and questions relevant to the Seychelles context.
+placement opportunities for students from \[University of
+Oxford(<https://www.ox.ac.uk/>)\] [MSc in International Health and
+Tropical Medicine
+(IHTM)](https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm) to
+work on specific health topics and questions relevant to the Seychelles
+context.
 
-In 2024, an IHTM student was hosted by the Seychelles Ministry of
-Health’s Policy Unit for their placement project on analysing policy
-gaps in relation to future development of priority health policies.
-Using existing situation analysis and identified priorities in the
-National Health Strategic Plan, and reviewing a catalogue of existing
-health policies, the project aimed to identify gaps in health policy and
-guidance.
+In 2024, an IHTM student was hosted by the [Seychelles Ministry of
+Health](https://www.health.gov.sc/)’s Policy Unit for their placement
+project on analysing policy gaps in relation to future development of
+priority health policies. Using existing situation analysis and
+identified priorities in the National Health Strategic Plan, and
+reviewing a catalogue of existing health policies, the project aimed to
+identify gaps in health policy and guidance.
 
 The `seypol` project is borne from this initial collaborative project.
 The project aims to create a routine, machine-operated, large language
@@ -62,7 +70,7 @@ The project repository is structured as follows:
         |-- R/
         |-- renv/
         |-- reports/
-        |-- sc-policy-store/
+        |-- sc-policy-knowledge/
         |-- _targets.R
         |-- .Rprofile
         |-- packages.R
@@ -102,9 +110,10 @@ The project repository is structured as follows:
 - `reports/` contains literate code for R Markdown reports rendered in
   the workflow.
 
-- `sc-policy-store` contains the [Open Knowledge Format
+- `sc-policy-knowledge` contains the [Open Knowledge Format
   (OKF)](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
-  standard representation of the curated Seychelles policy documents.
+  standard representation (also called a `knowledge bundle`) of the
+  curated Seychelles policy documents.
 
 - `renv.lock` file is the `renv` lockfile which records enough metadata
   about every package used in this project that it can be re-installed
@@ -140,6 +149,22 @@ with this requirement automatically. However, for Linux users, the
 install `{pdftools}` from source. Installation of the `poppler` library
 for Linux is described
 [here](https://docs.ropensci.org/pdftools/#installation).
+
+- `DuckDB`
+
+This project depends on the
+[`{ragnar}`](https://ragnar.tidyverse.org/index.html) package which
+requires `DuckDB`, a free, open-source, in-process relational database
+management system designed specifically for fast analytical query
+workloads using a columnar-vectorized execution engine. With zero
+external dependencies and broad portability across major operating
+systems, programming languages, and web browsers, it provides rich SQL
+support, ACID transactional guarantees, and seamless integration for
+interactive data analysis. When installing `{ragnar}`, the R package
+[`{duckdb}`](https://github.com/duckdb/duckdb-r) which provides R
+bindings to `DuckDB`, is also installed which in turn installs `DuckDB`
+into the system. This is the most reliable way to get `DuckDB` installed
+in the context of use with the R ecosystem.
 
 <!-- - `quarto`
 &#10;This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source
@@ -223,13 +248,19 @@ graph LR
     x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
     x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
     x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::uptodate --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate
-    x27176b5902005e16(["gemma_formatter"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::dispatched
-    xcbe4f4b8121299bb["sc_policy_text"]:::outdated --> x044b00013eb39812["sc_policy_markdown"]:::dispatched
+    x27176b5902005e16(["gemma_formatter"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    xcbe4f4b8121299bb["sc_policy_text"]:::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
+    x99d44d985d520465["sc_policy_markdown_origins"]:::outdated --> xf52ac7aa11e5031b["sc_policy_markdown_chunks"]:::outdated
+    x044b00013eb39812["sc_policy_markdown"]:::outdated --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
     x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
-    x044b00013eb39812["sc_policy_markdown"]:::dispatched --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
-    xbdacf1efe57d11ba(["gemma_extractor"]):::outdated --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
+    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> x99d44d985d520465["sc_policy_markdown_origins"]:::outdated
+    x044b00013eb39812["sc_policy_markdown"]:::outdated --> x99d44d985d520465["sc_policy_markdown_origins"]:::outdated
+    x1a53107f15848636(["local_gemma_embedding_model"]):::uptodate --> x2995403581289a36(["sc_policy_store"]):::outdated
+    xf52ac7aa11e5031b["sc_policy_markdown_chunks"]:::outdated --> x2995403581289a36(["sc_policy_store"]):::outdated
+    x0506af458389a3f2(["sc_policy_store_location"]):::uptodate --> x2995403581289a36(["sc_policy_store"]):::outdated
     x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     x8572be3fb16caa03["sc_policy_downloads"]:::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
+    xbdacf1efe57d11ba(["gemma_extractor"]):::outdated --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     
   end
 ```
@@ -249,16 +280,32 @@ Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
 
 ## Authors
 
-- Sylvie Pool
+- Sylvie Pool - University of Oxford and Seychelles Ministry of Health
 
-- Ernest Guevarra
+- Ernest Guevarra - University of Oxford
 
-- Proochista Ariana
+- Proochista Ariana - University of Oxford
 
 ## Contributors
 
-- Jillian Francise Lee
+- Jillian Francise Lee - University of Oxford
 
-- Sanjeev Pugazhendhi
+- Sanjeev Pugazhendhi - Seychelles Ministry of Health
+
+## License
+
+All code in this project is released under a
+[GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html#license-text)
+license. All written text in this project is released under a
+[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/deed.en)
+license. All data is released under a
+[CC0](https://creativecommons.org/public-domain/cc0/) license.
+
+## Citation
+
+If you use the code, text, and/or data provided in this repository in
+your work/research, please cite this work using the suggested
+appropriate citation provided in
+[CITATION.cff](https://github.com/OxfordIHTM/seypol/blob/main/CITATION.cff).
 
 <br> <br>
