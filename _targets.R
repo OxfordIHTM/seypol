@@ -130,7 +130,7 @@ data_targets <- tar_plan(
     command = create_markdown_doc(
       markdown_text = sc_policy_markdown,
       policy_label = sc_policy_docs_labels,
-      directory = "sc-policy-store/documents"
+      directory = "sc-policy-knowledge/documents"
     ),
     pattern = map(sc_policy_markdown, sc_policy_docs_labels),
     format = "file"
@@ -141,13 +141,23 @@ data_targets <- tar_plan(
 ## RAG targets ----
 rag_targets <- tar_plan(
   ## Specify policy store location ----
-  sc_policy_store_location = "sc-policy-store/sc-policy-store.duckdb",
+  sc_policy_store_location = "sc-policy-store.duckdb",
+
+  ## Add origin to policy markdowns ----
+  tar_target(
+    name = sc_policy_markdown_origins,
+    command = ragnar::MarkdownDocument(
+      text = sc_policy_markdown, origin = sc_policy_docs_labels
+    ),
+    pattern = map(sc_policy_markdown, sc_policy_docs_labels),
+    iteration = "list"
+  ),
 
   ## Chunk up policy markdowns ----
   tar_target(
     name = sc_policy_markdown_chunks,
-    command = ragnar::markdown_chunk(md = sc_policy_markdown),
-    pattern = map(sc_policy_markdown),
+    command = ragnar::markdown_chunk(md = sc_policy_markdown_origins),
+    pattern = map(sc_policy_markdown_origins),
     iteration = "list"
   ),
 

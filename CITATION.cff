@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+authors:
+  - family-names: Pool
+    given-names: Sylvie
+  - family-names: Guevarra
+    given-names: Ernest
+    orcid: https://orcid.org/0000-0002-4887-4415
+  - family-names: Ariana
+    given-names: Proochista
+    orcid: https://orcid.org/0000-0002-0154-2237
+contact:
+  - affiliation: "University of Oxford MSc in International Health and Tropical Medicine"
+    email: ernest@guevarra.io
+    family-names: Guevarra
+    given-names: Ernest
+title: "seypol: Curating Seychelles government policies from publicly-available sources"
+repository-code: https://github.com/OxfordIHTM/seypol
+license: GPL-3.0-or-later
+date-released: 2026-11-28
+version: 0.0.0.9000
+message: "If you use the code, written text, or data in this repository, please cite it using these metadata:"
+# identifiers:
+#   - type: doi
+#     value: 10.5281/zenodo.20782175
