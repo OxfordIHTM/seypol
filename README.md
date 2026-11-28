@@ -29,25 +29,26 @@ sources**.
 In 2022, the **Seychelles-Oxford Partnership** on research capacity
 building leveraged the vast research experience and skills of University
 of Oxford research partners for training and upskilling various
-stakeholders from the Ministry of Health (MOH) Seychelles. It is from
-this context that the ideas and motivation around this project began. Ad
-hoc, rough, and informal plans were drawn as to various projects
-relevant to the partnership’s aims alongside ongoing capacity-building
-related to research continued within the partnership. These included
-placement opportunities for students from \[University of
-Oxford(<https://www.ox.ac.uk/>)\] [MSc in International Health and
-Tropical Medicine
+stakeholders from the [Ministry of Health (MOH)
+Seychelles](https://www.health.gov.sc/). It is from this context that
+the ideas and motivation around this project began. Ad hoc, rough, and
+informal plans were drawn as to various projects relevant to the
+partnership’s aims alongside ongoing capacity-building related to
+research continued within the partnership. These included placement
+opportunities for students from [University of
+Oxford](https://www.ox.ac.uk/) [MSc in International Health and Tropical
+Medicine
 (IHTM)](https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm) to
 work on specific health topics and questions relevant to the Seychelles
 context.
 
-In 2024, an IHTM student was hosted by the [Seychelles Ministry of
-Health](https://www.health.gov.sc/)’s Policy Unit for their placement
-project on analysing policy gaps in relation to future development of
-priority health policies. Using existing situation analysis and
-identified priorities in the National Health Strategic Plan, and
-reviewing a catalogue of existing health policies, the project aimed to
-identify gaps in health policy and guidance.
+In 2024, an IHTM student was hosted by the Ministry of Health
+Seychelles’ Policy Unit for their placement project on analysing policy
+gaps in relation to future development of priority health policies.
+Using existing situation analysis and identified priorities in the
+National Health Strategic Plan, and reviewing a catalogue of existing
+health policies, the project aimed to identify gaps in health policy and
+guidance.
 
 The `seypol` project is borne from this initial collaborative project.
 The project aims to create a routine, machine-operated, large language
@@ -225,10 +226,10 @@ renv::restore()
 to install R package dependencies. This is only done once when the
 project is being initiated for the first time by a user.
 
-### Policy document curation workflow
+### Policy document text extraction workflow
 
-The Seychelles policy document curation workflow is described in the
-image below:
+The Seychelles policy document text extraction workflow is described in
+the image below:
 
 ``` mermaid
 graph LR
@@ -239,43 +240,32 @@ graph LR
     x1b466685f9e11517(["text_extraction_task_prompt"]):::outdated --> xbdacf1efe57d11ba(["gemma_extractor"]):::outdated
     x6390f6fe62a59357(["format_to_markdown_prompt"]):::outdated --> x27176b5902005e16(["gemma_formatter"]):::outdated
     xba597cd142706396(["local_gemma_model"]):::uptodate --> x27176b5902005e16(["gemma_formatter"]):::outdated
-    xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x0213d3acdfc48626(["sc_policy_data_review_report"]):::outdated
     xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::uptodate
     xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate
     xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::uptodate
     xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate --> x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate
-    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
     x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
+    xa5e9820ec774cf1f(["sc_policy_docs_file_names"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
     x8d87fc6cc54523e3(["sc_policy_docs_ids"]):::uptodate --> x8572be3fb16caa03["sc_policy_downloads"]:::uptodate
     x5e7ccb22ceeee8bc(["sc_policy_drive_contents"]):::uptodate --> xd2d008f1c464dae2(["sc_policy_drive_catalogue"]):::uptodate
-    x27176b5902005e16(["gemma_formatter"]):::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    xcbe4f4b8121299bb["sc_policy_text"]:::outdated --> x044b00013eb39812["sc_policy_markdown"]:::outdated
-    x99d44d985d520465["sc_policy_markdown_origins"]:::outdated --> xf52ac7aa11e5031b["sc_policy_markdown_chunks"]:::outdated
-    x044b00013eb39812["sc_policy_markdown"]:::outdated --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
-    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> xbd612e9dc82447c3["sc_policy_markdown_file"]:::outdated
-    x7ef01fbef9fccbbe(["sc_policy_docs_labels"]):::uptodate --> x99d44d985d520465["sc_policy_markdown_origins"]:::outdated
-    x044b00013eb39812["sc_policy_markdown"]:::outdated --> x99d44d985d520465["sc_policy_markdown_origins"]:::outdated
-    x1a53107f15848636(["local_gemma_embedding_model"]):::uptodate --> x2995403581289a36(["sc_policy_store"]):::outdated
-    xf52ac7aa11e5031b["sc_policy_markdown_chunks"]:::outdated --> x2995403581289a36(["sc_policy_store"]):::outdated
-    x0506af458389a3f2(["sc_policy_store_location"]):::uptodate --> x2995403581289a36(["sc_policy_store"]):::outdated
-    x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
-    x8572be3fb16caa03["sc_policy_downloads"]:::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     xbdacf1efe57d11ba(["gemma_extractor"]):::outdated --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
+    x8572be3fb16caa03["sc_policy_downloads"]:::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
+    x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     
   end
 ```
 
-To run the policy document curation workflow, issue the following
+To run the policy document text extraction workflow, issue the following
 command from within the project’s environment on your R console:
 
 ``` r
-targets::tar_make(sc_policy_markdown_file)
+targets::tar_make(sc_policy_text)
 ```
 
 or from Terminal:
 
 ``` r
-Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
+Rscript -e 'targets::tar_make(sc_policy_text)'
 ```
 
 ## Authors
