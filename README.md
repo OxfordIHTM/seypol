@@ -15,7 +15,7 @@ code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://openso
 text](https://img.shields.io/badge/license_for_writing-CC_BY_4.0-blue)](https://creativecommons.org/licenses/by/4.0/)
 [![License for
 data](https://img.shields.io/badge/license_for_data-CC0-blue)](https://creativecommons.org/public-domain/cc0/)
-[![data-ingest-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/data-ingest-workflow.yml)
+[![text-extraction-workflow](https://github.com/OxfordIHTM/seypol/actions/workflows/text-extraction-workflow.yml/badge.svg)](https://github.com/OxfordIHTM/seypol/actions/workflows/text-extraction-workflow.yml)
 <!-- badges: end -->
 
 This is a [`{targets}`](https://docs.ropensci.org/targets/)-based,
