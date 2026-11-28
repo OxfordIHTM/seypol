@@ -26,9 +26,9 @@ This is a [`{targets}`](https://docs.ropensci.org/targets/)-based, [`{renv}`](ht
 
 ## About the Project
 
-In 2022, the **Seychelles-Oxford Partnership** on research capacity building leveraged the vast research experience and skills of University of Oxford research partners for training and upskilling various stakeholders from the Ministry of Health (MOH) Seychelles. It is from this context that the ideas and motivation around this project began. Ad hoc, rough, and informal plans were drawn as to various projects relevant to the partnership's aims alongside ongoing capacity-building related to research continued within the partnership. These included placement opportunities for students from [University of Oxford(https://www.ox.ac.uk/)] [MSc in International Health and Tropical Medicine (IHTM)](https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm) to work on specific health topics and questions relevant to the Seychelles context.
+In 2022, the **Seychelles-Oxford Partnership** on research capacity building leveraged the vast research experience and skills of University of Oxford research partners for training and upskilling various stakeholders from the [Ministry of Health (MOH) Seychelles](https://www.health.gov.sc/). It is from this context that the ideas and motivation around this project began. Ad hoc, rough, and informal plans were drawn as to various projects relevant to the partnership's aims alongside ongoing capacity-building related to research continued within the partnership. These included placement opportunities for students from [University of Oxford](https://www.ox.ac.uk/) [MSc in International Health and Tropical Medicine (IHTM)](https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm) to work on specific health topics and questions relevant to the Seychelles context.
 
-In 2024, an IHTM student was hosted by the [Seychelles Ministry of Health](https://www.health.gov.sc/)'s Policy Unit for their placement project on analysing policy gaps in relation to future development of priority health policies. Using existing situation analysis and identified priorities in the National Health Strategic Plan, and reviewing a catalogue of existing health policies, the project aimed to identify gaps in health policy and guidance.
+In 2024, an IHTM student was hosted by the Ministry of Health Seychelles' Policy Unit for their placement project on analysing policy gaps in relation to future development of priority health policies. Using existing situation analysis and identified priorities in the National Health Strategic Plan, and reviewing a catalogue of existing health policies, the project aimed to identify gaps in health policy and guidance.
 
 The `seypol` project is borne from this initial collaborative project. The project aims to create a routine, machine-operated, large language model-assisted, and human-supervised process of curation of different policies (beyond just health-specific and health-related ones) that will make them accessible, persistent, and machine-readable/machine-actionable to support current and future policy research efforts in Seychelles.
 
@@ -134,34 +134,42 @@ On starting an R session in the working directory of this repository, first run
 renv::restore()
 ```
 
-to install R package dependencies. This is only done once when the
-project is being initiated for the first time by a user.
+to install R package dependencies. This is only done once when the project is being initiated for the first time by a user.
 
-### Policy document curation workflow
+### Policy document text extraction workflow
 
-The Seychelles policy document curation workflow is described in the image below:
+The Seychelles policy document text extraction workflow is described in the image below:
 
-```{r policy_curation_workflow, echo = FALSE, message = FALSE, results = 'asis'}
+```{r policy_text_extraction_workflow, echo = FALSE, message = FALSE, results = 'asis'}
 cat(
   "```mermaid",
   targets::tar_mermaid(
-    targets_only = TRUE, color = FALSE, legend = FALSE, reporter = "silent"
+    targets_only = TRUE,
+    names = c(
+      dplyr::contains(
+        c(
+          "gemma", "markdown_prompt", "extraction_task_prompt",
+          "policy_drive", "policy_docs", "policy_downlaods", "policy_text"
+        )
+      )
+    ),
+    color = FALSE, legend = FALSE, reporter = "silent"
   ),
   "```",
   sep = "\n"
 )
 ```
 
-To run the policy document curation workflow, issue the following command from within the project's environment on your R console:
+To run the policy document text extraction workflow, issue the following command from within the project's environment on your R console:
 
 ```R
-targets::tar_make(sc_policy_markdown_file)
+targets::tar_make(sc_policy_text)
 ```
 
 or from Terminal:
 
 ```R
-Rscript -e 'targets::tar_make(sc_policy_markdown_file)'
+Rscript -e 'targets::tar_make(sc_policy_text)'
 ```
 
 ## Authors
