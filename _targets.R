@@ -167,7 +167,8 @@ rag_targets <- tar_plan(
     command = create_policy_store(
       chunks = sc_policy_markdown_chunks, location = sc_policy_store_location,
       model = local_gemma_embedding_model, overwrite = FALSE
-    )
+    ),
+    format = "file"
   )
 )
 
