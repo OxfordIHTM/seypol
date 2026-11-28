@@ -251,7 +251,7 @@ graph LR
     xbdacf1efe57d11ba(["gemma_extractor"]):::outdated --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     x8572be3fb16caa03["sc_policy_downloads"]:::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
     x8d9f0267e7819a0e(["sc_policy_docs_file_types"]):::uptodate --> xcbe4f4b8121299bb["sc_policy_text"]:::outdated
-    x1a53107f15848636(["local_gemma_embedding_model"]):::uptodate
+    
   end
 ```
 

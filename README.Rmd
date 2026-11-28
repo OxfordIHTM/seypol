@@ -153,6 +153,7 @@ cat(
         )
       )
     ),
+    exclude = local_gemma_embedding_model,
     color = FALSE, legend = FALSE, reporter = "silent"
   ),
   "```",
